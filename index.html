@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דורון נקש - סוכן נסיעות</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            border-bottom: #0779e4 3px solid;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header #lang-switcher {
+            margin-top: 10px;
+        }
+        header #lang-switcher button {
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        header #lang-switcher button:hover {
+            background: #0779e4;
+        }
+
+        section {
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #0779e4;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #hero {
+            text-align: center;
+            background: #0779e4; /* Primary color for hero */
+            color: #fff;
+        }
+        #hero p {
+            font-size: 1.2rem;
+        }
+        #hero a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .contact-buttons button, .contact-buttons a {
+            display: inline-block;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .contact-buttons button:hover, .contact-buttons a:hover {
+            background: #0779e4;
+        }
+        .contact-buttons .instagram-btn {
+             background-color: #E1306C;
+        }
+         .contact-buttons .instagram-btn:hover {
+             background-color: #C13584;
+        }
+        .contact-buttons .whatsapp-btn {
+            background-color: #25D366;
+        }
+        .contact-buttons .whatsapp-btn:hover {
+            background-color: #128C7E;
+        }
+
+        strong {
+            color: #0779e4;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 25px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
+        }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+        @keyframes slideIn { from {transform: translateY(-50px);} to {transform: translateY(0);} }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover, .close-button:focus {
+            color: black;
+            text-decoration: none;
+        }
+        .modal-content label, .modal-content div[data-lang-key="serviceTypeLabel"] {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .modal-content input[type="text"], .modal-content select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .modal-content button {
+            background-color: #0779e4;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-size: 1rem;
+        }
+        .modal-content button:hover {
+            background-color: #0056b3;
+        }
+        .suggestions-list {
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: white;
+            position: absolute;
+            width: calc(100% - 22px); /* Match input width */
+            z-index: 1001; /* Above other modal content */
+        }
+        .suggestions-list div {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .suggestions-list div:hover {
+            background-color: #f0f0f0;
+        }
+        .autocomplete-container {
+            position: relative; /* For positioning suggestions */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: #fff;
+            margin-top: 30px;
+        }
+
+        /* RTL specific adjustments if needed */
+        [dir="rtl"] .close-button {
+            float: left;
+        }
+        [dir="rtl"] .modal-content input[type="text"], 
+        [dir="rtl"] .modal-content select {
+             /* Adjust padding/margin if needed for RTL */
+        }
+    </style>
+
+    <script type="module">
+      // Import the functions you need from the Firebase SDKs
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+      import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCHA3zQ-8qzDmTHjCJw8dKphfr0-a1r9_0",
+        authDomain: "nofesh-d7ebe.firebaseapp.com",
+        projectId: "nofesh-d7ebe",
+        storageBucket: "nofesh-d7ebe.firebasestorage.app",
+        messagingSenderId: "5256668706",
+        appId: "1:5256668706:web:533958bc06165a612c4c7b",
+        measurementId: "G-99KTGDGZNX"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      // Expose Firestore instance to global scope for main script
+      window.db = getFirestore(app);
+      window.getDoc = getDoc;
+      window.doc = doc;
+    </script>
+</head>
+<body>
+    <header>
+        <h1 data-lang-key="pageTitle">דורון נקש - סוכן נסיעות</h1>
+        <div id="lang-switcher">
+            <button onclick="changeLanguage('he')">עברית</button>
+            <button onclick="changeLanguage('en')">English</button>
+            <button onclick="changeLanguage('fr')">Français</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="hero">
+            <h2 data-lang-key="slogan">סוכן נסיעות במחירים מנצחים!</h2>
+            <p data-lang-key="myName">דורון נקש</p>
+            <p data-lang-key="phone">טלפון: 0584593847</p>
+            <p><span data-lang-key="instagramText">אינסטגרם</span>: <a href="https://www.instagram.com/nofesh_li/" target="_blank" id="instagramLink">nofesh_li</a></p>
+        </section>
+
+        <section id="about">
+            <h2 data-lang-key="aboutTitle">קצת על העסק</h2>
+            <p data-lang-key="aboutDesc1">אפשר לבקש ממני חבילות של טיסה+מלון, רק מלון, או רק טיסה. אפשר לבקש ממני הכל כמעט!</p>
+            <p data-lang-html-key="aboutDesc2"><strong>מלון בהזמנה ממני זה ללא עמלה!</strong></p>
+            <p data-lang-html-key="aboutDesc3">הזמנת חבילה לרוב זה 3-5% עמלה מהעסקה - <strong>מחירים מנצחים בשוק!</strong></p>
+            <p data-lang-key="aboutDesc4">כנ"ל טיסה - 3-5% עמלה.</p>
+            <p data-lang-key="aboutDesc5">אני עוזר עד סוף ההזמנה ופה לכל בעיה.</p>
+        </section>
+
+        <section id="contact" class="contact-buttons">
+            <h2 data-lang-key="contactTitle">צרו קשר</h2>
+            <button onclick="openWhatsAppModal()" class="whatsapp-btn" data-lang-key="whatsappBtn">
+                הזמנה בוואטסאפ
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDIuMDM3QzYuNDkyIDIuMDM3IDIgNi41MiAyIDEyLjAwMWMwIDUuNDggNC40OTIgOS45NjMgOS45NzkgOS45NjNoLjAyMWMxLjY4NSAwIDMuMjkzLS40NTQgNC42ODYtMS4zMDJsMy41OTUgMS4zMDItMS40ODQtMy40ODljLjc3My0xLjM4NSAxLjE4Ni0zLjAyIDEuMTg2LTQuNzA0QzIwLjAwMSAwIDYuNTIgMTUuNTEgMi4wMzcgMTIgMi4wMzdjMCAzLjYyMSAyLjI3MyA2LjczOCA1LjQ0MyA4LjA5bC0uOTI2IDIuMTgtLjExMy0uMDIzYy0zLjg2Ny0uODUxLTYuNjE5LTQuMjQ3LTYuNjE5LTguMjM3YzAtNC42NiAzLjc5Ni04LjQ1NyA4LjQ1Ny04LjQ1N3M4LjQ1NyAzLjc5NiA4LjQ1NyA4LjQ1N2MwIDEuNzUtLjUzNSAzLjM4LTEuNDcgNC43NDRsLjgzNCAxLjk2OGMuOTUtMS40NDYgMS40ODItMy4xNTEgMS40ODItNC45NTdDMjEuMTg2IDUuODA2IDE3LjA3MiAxLjY5MyAxMiAxLjY5M3MtOS4xODYgNC4xMTMtOS4xODYgOS4xODZtMCBjMC45OTQuMDAyIDEuOTY1LjE4MiAyLjg2LjUxMWwuMjE0LjA2Ni0uMzYuODQ4Yy0xLjExMyAyLjYyMi0uMDczIDUuNjU2IDIuNzQzIDcuMDk2bC4zMS4xNTgtLjc2NS4zMjZjLTEuNjM1LjY5NC0zLjQ0LS4xMDQtNC4zNzMtMS40OTctMS4xMDEtMS42NS0uOTAzLTMuNzc2LjUzOC01LjIwOGwuMTA2LS4xMDJjLjA0NS0uMDQ0LjA4NC0uMDkxLjEyMy0uMTM3bDEuMTYtMS4zNjdjLjM2Ni0uNDI4LjMzLTEuMDItLjA3OC0xLjM5Ni0uMzUzLS4zMjMtLjg1OC0uNDA1LTEuMjg4LS4yMTZsLS42Ni4zMDZjLTEuNzU3LjgwNi0yLjc2NCAyLjczNC0yLjM1IDQuNjk0LjM2MSAxLjczMSAxLjYyIDMuMTEgMy4zMTMgMy40OTQgMS4xMy4yNTYgMi4yOTctLjAwMyAzLjMxLS40OThsMS40NC0xLjQ0YzEuMTA4LTEuMTA4IDEuMTA4LTIuOTAzIDAtNC4wMXMtMi45MDMtMS4xMDgtNC4wMSAwbC0xLjE0NSAxLjE0NWMtLjI2MS4yNjEtLjM4LjYxNi0uMzIuOTY1bC4wNzQuNDM3Yy4xNzcgMS4wNDggMS4wOCAyLjQ0OCAyLjY1IDMuMTY0IDEuNTMuNyAyLjg2LjY3IDMuOS0uMDNsLjU4My0uMzk1YzEuMTU0LS43OCAyLjA3Ny0yLjE2MiAyLjA3Ny0zLjcxNiAwLTIuMjMtMS44MTMtNC4wNDMtNC4wNDMtNC4wNDNIOC4wNGMtMS4xMyAwLTIuMTc2LjQ2LTIuOTIgMS4yMDhMNCExMS4yMDdsLTIuMjUtMS4yNDNjLjc1LTEuMzc0IDEuOTEzLTIuMjI1IDMuMjEzLTIuMjI1aDEuMDNjMS40OSAwIDIuODUuNzMgMy43IDEuOTFsLjQyLjU2cy4zMjMtLjIxNS4zMjMtLjIxNWMxLjA5OC0uNzMzIDIuNDczLS45NzMgMy43ODctLjYxNCAyLjMuNjMzIDMuNjUgMi44MTMgMy4wMSA1LjA4LS41NTMgMy42NDUtMy44NDIgNi4xOTItNy40NTIgNS40NC0xLjY1NC0uMzQzLTMuMTEtMS4xOTMtNC4wOTUtMi40MTVoLS4wMDF6Ii8+PC9zdmc=" alt="WhatsApp" style="width:16px; height:16px; vertical-align:middle; margin-left:5px;"/>
+            </button>
+            <a href="https://www.instagram.com/nofesh_li/" target="_blank" class="instagram-btn" data-lang-key="instagramBtn">
+                עקבו באינסטגרם
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJDOC4xMyAyIDIgOC4xMyAyIDEyczYuMTMgMTAgMTAgMTAgMTAtNi4xMyAxMC0xMFMxNS44NyAyIDEyIDJ6bTYgMTMuNWMwIC4yOC0uMjIuNS0uNS41aC0xMWMtLjI4IDAtLjUtLjIyLS41LS41di03YzAtLjI4LjIyLS41LjUtLjVoMTFjLjI4IDAgLjUuMjIuNS41djd6Ii8+PHBhdGggZD0iTTEyIDE1YzEuOTMgMCAzLjUtMS41NyAzLjUtMy41UzEzLjkzIDggMTIgOCBzLTMuNSAxLjU3LTMuNSAzLjUgMS41NyAzLjUgMy41IDMuNXptMC01YzAuODMgMCAxLjUuNjcgMS41IDEuNVMxMi44MyAxMyAxMiAxM3MtMS41LS42Ny0xLjUtMS41UzExLjE3IDEwIDEyIDEwem00LjUtMS44Yy0uNDEgMC0uNzUuMzQtLjc1Ljc1czAuMzQuNzUuNzUuNzUuNzUtLjM0Ljc1LS43NS0uMzQtLjc1LS43NS0uNzV6Ii8+PC9zdmc=" alt="Instagram" style="width:16px; height:16px; vertical-align:middle; margin-left:5px;"/>
+            </a>
+        </section>
+    </div>
+
+    <div id="whatsappModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeWhatsAppModal()">&times;</span>
+            <h3 data-lang-key="modalTitle">פרטי הזמנה</h3>
+            
+            <div class="autocomplete-container">
+                <label for="country" data-lang-key="countryLabel">מדינה (אופציונלי):</label>
+                <input type="text" id="country" oninput="debouncedFetchSuggestions('country', this.value)" autocomplete="off" placeholder="">
+                <div id="countrySuggestions" class="suggestions-list"></div>
+            </div>
+
+            <div class="autocomplete-container">
+                <label for="city" data-lang-key="cityLabel">עיר (אופציונלי):</label>
+                <input type="text" id="city" oninput="debouncedFetchSuggestions('city', this.value)" autocomplete="off" placeholder="">
+                <div id="citySuggestions" class="suggestions-list"></div>
+            </div>
+            
+            <div>
+                <label for="serviceType" data-lang-key="serviceTypeLabel">סוג שירות:</label>
+                <select id="serviceType">
+                    <option value="package" data-lang-key="servicePackage">חבילת טיסה + מלון</option>
+                    <option value="flight" data-lang-key="serviceFlight">טיסה בלבד</option>
+                    <option value="hotel" data-lang-key="serviceHotel">מלון בלבד</option>
+                </select>
+            </div>
+            <button onclick="sendWhatsAppMessage()" data-lang-key="sendToWhatsappBtn">שלח לוואטסאפ</button>
+        </div>
+    </div>
+
+    <footer>
+        <p data-lang-html-key="footerText">&copy; 2025 דורון נקש. כל הזכויות שמורות.</p>
+    </footer>
+
+    <script>
+        // תרגומים
+        const translations = {
+            he: {
+                pageTitle: "דורון נקש - סוכן נסיעות",
+                slogan: "סוכן נסיעות במחירים מנצחים!",
+                myName: "דורון נקש",
+                phone: "טלפון: 0584593847",
+                instagramText: "אינסטגרם",
+                aboutTitle: "קצת על העסק",
+                aboutDesc1: "אפשר לבקש ממני חבילות של טיסה+מלון, רק מלון, או רק טיסה. אפשר לבקש ממני הכל כמעט!",
+                aboutDesc2: "<strong>מלון בהזמנה ממני זה ללא עמלה!</strong>",
+                aboutDesc3: "הזמנת חבילה לרוב זה 3-5% עמלה מהעסקה - <strong>מחירים מנצחים בשוק!</strong>",
+                aboutDesc4: "כנ\"ל טיסה - 3-5% עמלה.",
+                aboutDesc5: "אני עוזר עד סוף ההזמנה ופה לכל בעיה.",
+                contactTitle: "צרו קשר",
+                whatsappBtn: "הזמנה בוואטסאפ",
+                instagramBtn: "עקבו באינסטגרם",
+                modalTitle: "פרטי הזמנה",
+                countryLabel: "מדינה (אופציונלי):",
+                cityLabel: "עיר (אופציונלי):",
+                serviceTypeLabel: "סוג שירות:",
+                servicePackage: "חבילת טיסה + מלון",
+                serviceFlight: "טיסה בלבד",
+                serviceHotel: "מלון בלבד",
+                sendToWhatsappBtn: "שלח לוואטסאפ",
+                footerText: "&copy; 2025 דורון נקש. כל הזכויות שמורות.",
+                whatsappGreeting: "היי",
+                whatsappRequestInfo: "אשמח לשמוע פרטים על",
+                whatsappServiceFlight: "טיסה",
+                whatsappServiceHotel: "מלון",
+                whatsappServicePackage: "חבילה של טיסה ומלון",
+                whatsappInCity: "ב",
+                whatsappInCountry: "ב",
+                selectCountryPlaceholder: "הקלד שם מדינה...",
+                selectCityPlaceholder: "הקלד שם עיר...",
+                noSuggestions: "לא נמצאו הצעות.",
+                loadingText: "טוען...",
+                errorLoading: "אירעה שגיאה בטעינת ההצעות. נסה שוב מאוחר יותר."
+            },
+            en: {
+                pageTitle: "Doron Nakash - Your Travel Agent",
+                slogan: "Travel agent with unbeatable prices!",
+                myName: "Doron Nakash",
+                phone: "Phone: 0584593847",
+                instagramText: "Instagram",
+                aboutTitle: "About the Business",
+                aboutDesc1: "You can request flight + hotel packages, hotel only, or flight only. You can ask for almost anything!",
+                aboutDesc2: "<strong>Hotel bookings with me are commission-free!</strong>",
+                aboutDesc3: "Package bookings usually have a 3-5% commission - <strong>unbeatable market prices!</strong>",
+                aboutDesc4: "Same for flights - 3-5% commission.",
+                aboutDesc5: "I assist until the end of the booking and am here for any issue.",
+                contactTitle: "Contact Us",
+                whatsappBtn: "Order via WhatsApp",
+                instagramBtn: "Follow on Instagram",
+                modalTitle: "Booking Details",
+                countryLabel: "Country (optional):",
+                cityLabel: "City (optional):",
+                serviceTypeLabel: "Service Type:",
+                servicePackage: "Flight + Hotel Package",
+                serviceFlight: "Flight Only",
+                serviceHotel: "Hotel Only",
+                sendToWhatsappBtn: "Send to WhatsApp",
+                footerText: "&copy; 2025 Doron Nakash. All rights reserved.",
+                whatsappGreeting: "Hi",
+                whatsappRequestInfo: "I'd like to hear more details about a",
+                whatsappServiceFlight: "flight",
+                whatsappServiceHotel: "hotel",
+                whatsappServicePackage: "flight and hotel package",
+                whatsappInCity: "in",
+                whatsappInCountry: "in",
+                selectCountryPlaceholder: "Type a country name...",
+                selectCityPlaceholder: "Type a city name...",
+                noSuggestions: "No suggestions found.",
+                loadingText: "Loading...",
+                errorLoading: "Error loading suggestions. Please try again later."
+            },
+            fr: {
+                pageTitle: "Doron Nakash - Votre Agent de Voyage",
+                slogan: "Agent de voyage aux prix imbattables !",
+                myName: "Doron Nakash",
+                phone: "Téléphone : 0584593847",
+                instagramText: "Instagram",
+                aboutTitle: "À propos de l'entreprise",
+                aboutDesc1: "Vous pouvez demander des forfaits vol + hôtel, hôtel uniquement ou vol uniquement. Vous pouvez presque tout demander !",
+                aboutDesc2: "<strong>Les réservations d'hôtel avec moi sont sans commission !</strong>",
+                aboutDesc3: "Les réservations de forfaits ont généralement une commission de 3 à 5 % - <strong>prix imbattables sur le marché !</strong>",
+                aboutDesc4: "Idem pour les vols - commission de 3 à 5%.",
+                aboutDesc5: "J'assiste jusqu'à la fin de la réservation et suis là pour tout problème.",
+                contactTitle: "Contactez-nous",
+                whatsappBtn: "Commander via WhatsApp",
+                instagramBtn: "Suivez sur Instagram",
+                modalTitle: "Détails de la réservation",
+                countryLabel: "Pays (optionnel) :",
+                cityLabel: "Ville (optionnel) :",
+                serviceTypeLabel: "Type de service :",
+                servicePackage: "Forfait Vol + Hôtel",
+                serviceFlight: "Vol Uniquement",
+                serviceHotel: "Hôtel Uniquement",
+                sendToWhatsappBtn: "Envoyer à WhatsApp",
+                footerText: "&copy; 2025 Doron Nakash. Tous droits réservés.",
+                whatsappGreeting: "Bonjour",
+                whatsappRequestInfo: "J'aimerais avoir plus de détails sur un",
+                whatsappServiceFlight: "vol",
+                whatsappServiceHotel: "hôtel",
+                whatsappServicePackage: "forfait vol et hôtel",
+                whatsappInCity: "à",
+                whatsappInCountry: "en",
+                selectCountryPlaceholder: "Tapez un nom de pays...",
+                selectCityPlaceholder: "Tapez un nom de ville...",
+                noSuggestions: "Aucune suggestion trouvée.",
+                loadingText: "Chargement...",
+                errorLoading: "Erreur lors du chargement des suggestions. Réessayez plus tard."
+            }
+        };
+
+        let currentLanguage = 'he';
+        let geoNamesUsername = null; // שם המשתמש שלך ב-GeoNames
+
+        // שליפת GeoNames username מתוך Firestore
+        async function fetchGeoNamesUsername() {
+            if (!window.db || !window.getDoc || !window.doc) {
+                console.error("Firestore is not initialized yet.");
+                setTimeout(fetchGeoNamesUsername, 1000);
+                return;
+            }
+            try {
+                const docRef = window.doc(window.db, "settings", "geonames");
+                const docSnap = await window.getDoc(docRef);
+                if (docSnap.exists()) {
+                    geoNamesUsername = docSnap.data().username;
+                    console.log("GeoNames username loaded:", geoNamesUsername);
+                } else {
+                    console.error("GeoNames document not found in Firestore!");
+                    alert("Error: Could not load GeoNames configuration.");
+                }
+            } catch (error) {
+                console.error("Error fetching GeoNames username:", error);
+                alert("Error: Could not load GeoNames configuration.");
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            document.querySelectorAll('[data-lang-html-key]').forEach(el => {
+                const key = el.dataset.langHtmlKey;
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // עדכון placeholder לשדות הקלט
+            const countryInput = document.getElementById('country');
+            if (countryInput) countryInput.placeholder = translations[lang].selectCountryPlaceholder || '';
+            const cityInput = document.getElementById('city');
+            if (cityInput) cityInput.placeholder = translations[lang].selectCityPlaceholder || '';
+            
+            // עדכון אפשרויות סוג שירות
+            document.querySelectorAll('#serviceType option').forEach(option => {
+                const key = option.dataset.langKey;
+                if (translations[lang] && translations[lang][key]) {
+                    option.textContent = translations[lang][key];
+                }
+            });
+
+            // עדכון כותרת הדף
+            document.title = translations[lang].pageTitle;
+        }
+
+        // פונקציות פתיחת/סגירת המודל
+        const modal = document.getElementById('whatsappModal');
+        function openWhatsAppModal() {
+            modal.style.display = 'block';
+        }
+        function closeWhatsAppModal() {
+            modal.style.display = 'none';
+            clearSuggestions('country');
+            clearSuggestions('city');
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeWhatsAppModal();
+            }
+        }
+
+        function sendWhatsAppMessage() {
+            const country = document.getElementById('country').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const serviceTypeElement = document.getElementById('serviceType');
+            const serviceTypeValue = serviceTypeElement.value;
+            
+            const langPack = translations[currentLanguage];
+            let serviceText = "";
+            if (serviceTypeValue === 'package') serviceText = langPack.whatsappServicePackage;
+            else if (serviceTypeValue === 'flight') serviceText = langPack.whatsappServiceFlight;
+            else if (serviceTypeValue === 'hotel') serviceText = langPack.whatsappServiceHotel;
+
+            let message = `${langPack.whatsappGreeting}, ${langPack.whatsappRequestInfo} ${serviceText}`;
+            if (city) {
+                message += ` ${langPack.whatsappInCity} ${city}`;
+            }
+            if (country) {
+                message += ` ${langPack.whatsappInCountry} ${country}`;
+            }
+            message += ".";
+
+            const whatsappNumber = "0584593847";
+            const internationalNumber = whatsappNumber.startsWith('0') ? `+972${whatsappNumber.substring(1)}` : whatsappNumber;
+            
+            const whatsappUrl = `https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            closeWhatsAppModal();
+        }
+
+        // פונקציית Debounce
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        // החיפוש האוטומטי עם GeoNames
+        async function fetchSuggestions(inputType, query) {
+            const langPack = translations[currentLanguage];
+            if (!geoNamesUsername) {
+                console.warn("GeoNames username not loaded yet.");
+                return;
+            }
+            if (query.length < 2) {
+                clearSuggestions(inputType);
+                return;
+            }
+
+            const suggestionsListId = `${inputType}Suggestions`;
+            const suggestionsList = document.getElementById(suggestionsListId);
+            suggestionsList.innerHTML = langPack.loadingText;
+
+            try {
+                // קריאה ל-GeoNames API
+                const response = await fetch(
+                    `https://secure.geonames.org/searchJSON?q=${encodeURIComponent(query)}&maxRows=5&username=${geoNamesUsername}`
+                );
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                const data = await response.json();
+
+                clearSuggestions(inputType);
+
+                if (data.geonames && data.geonames.length > 0) {
+                    data.geonames.forEach(place => {
+                        const div = document.createElement('div');
+                        div.textContent = place.name + (place.countryName ? `, ${place.countryName}` : '');
+                        div.onclick = () => {
+                            document.getElementById(inputType).value = place.name;
+                            clearSuggestions(inputType);
+                        };
+                        suggestionsList.appendChild(div);
+                    });
+                } else {
+                    suggestionsList.innerHTML = langPack.noSuggestions;
+                }
+            } catch (error) {
+                console.error(`Error fetching ${inputType} suggestions:`, error);
+                suggestionsList.innerHTML = langPack.errorLoading;
+            }
+        }
+        
+        const debouncedFetchSuggestions = debounce(fetchSuggestions, 400);
+
+        function clearSuggestions(inputType) {
+            const suggestionsListId = `${inputType}Suggestions`;
+            document.getElementById(suggestionsListId).innerHTML = '';
+        }
+        
+        // סגירת רשימות ההצעות כשמקליקים מחוץ
+        document.addEventListener('click', function(event) {
+            const countrySuggestions = document.getElementById('countrySuggestions');
+            const citySuggestions = document.getElementById('citySuggestions');
+            const countryInput = document.getElementById('country');
+            const cityInput = document.getElementById('city');
+
+            if (!countrySuggestions.contains(event.target) && event.target !== countryInput) {
+                clearSuggestions('country');
+            }
+            if (!citySuggestions.contains(event.target) && event.target !== cityInput) {
+                clearSuggestions('city');
+            }
+        });
+
+        // אתחול
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchGeoNamesUsername();        // טוען את שם המשתמש ל-GeoNames
+            changeLanguage(currentLanguage); // מגדיר את השפה ההתחלתית
+        });
+    </script>
+</body>
+</html>
