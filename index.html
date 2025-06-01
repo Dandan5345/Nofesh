@@ -1,1 +1,1345 @@
-<!DOCTYPE html> <html lang="he" dir="rtl"> <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <title>דורון נקש - סוכן הנסיעות האישי שלך</title>     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&Rubik:wght@400;500;700&display=swap" rel="stylesheet">     <style>         :root {             --primary-color: #0077cc; /* כחול עמוק ומודרני */             --secondary-color: #005fa3; /* כחול כהה יותר להדגשות */             --accent-color: #f39c12; /* כתום/זהב כצבע מבטא עדין */             --text-color: #34495e; /* אפור-כחלחל כהה לטקסט */             --light-text-color: #ecf0f1; /* טקסט בהיר על רקעים כהים */             --bg-light: #f8f9fa; /* רקע בהיר מאוד */             --border-radius: 8px;             --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);             --font-primary: 'Rubik', 'Assistant', sans-serif; /* פונט עברי ראשי */             --font-secondary: 'Assistant', sans-serif; /* פונט משני */         }          *, *::before, *::after {             box-sizing: border-box;             margin: 0;             padding: 0;         }          html { /* Added for smooth scroll behavior */             scroll-behavior: smooth;         }          body {             font-family: var(--font-secondary);             line-height: 1.7;             color: var(--text-color);             background-color: #fff; /* רקע לבן נקי */             overflow-x: hidden; /* למנוע גלילה אופקית מיותרת */         }          .container {             width: 90%;             max-width: 1200px;             margin: 0 auto;             padding: 0 15px;         }          /* Header */         .site-header {             background-color: #fff;             padding: 15px 0;             position: fixed; /* Header נשאר למעלה */             top: 0;             left: 0;             right: 0;             z-index: 1000;             box-shadow: 0 2px 5px rgba(0,0,0,0.08);             transition: background-color 0.3s ease;         }         .site-header .container {             display: flex;             justify-content: space-between;             align-items: center;         }         .logo {             font-family: var(--font-primary);             font-size: 1.8rem;             font-weight: 700;             color: var(--primary-color);             text-decoration: none;         }         .logo span { /* שם הסוכן */             font-weight: 500;             color: var(--text-color);         }          /* Language Switcher - Dropdown */         .language-switcher {             position: relative;         }         .language-switcher-button {             background-color: transparent;             border: 1px solid #ddd;             border-radius: var(--border-radius);             padding: 8px 12px;             cursor: pointer;             display: flex;             align-items: center;             transition: border-color 0.3s;         }         .language-switcher-button:hover {             border-color: var(--primary-color);         }         .language-switcher-button .flag-icon {             width: 24px;             height: 18px;             border-radius: 50%; /* דגלים עגולים */             object-fit: cover;             box-shadow: 0 0 3px rgba(0,0,0,0.2);         }         .language-switcher-button .arrow-down {             width: 10px;             height: 10px;             fill: var(--text-color);             transition: transform 0.3s;         }         [dir="rtl"] .language-switcher-button .arrow-down { margin-right: 8px; }         [dir="ltr"] .language-switcher-button .arrow-down { margin-left: 8px; }          .language-switcher-dropdown {             display: none;             position: absolute;             top: calc(100% + 8px);             background-color: #fff;             border: 1px solid #eee;             border-radius: var(--border-radius);             box-shadow: var(--box-shadow);             z-index: 10;             min-width: 150px;             overflow: hidden;         }         [dir="rtl"] .language-switcher-dropdown { left: 0; }         [dir="ltr"] .language-switcher-dropdown { right: 0; }          .language-switcher.open .language-switcher-dropdown { display: block; }         .language-switcher.open .arrow-down { transform: rotate(180deg); }          .language-switcher-dropdown ul {             list-style: none;         }         .language-switcher-dropdown li a {             display: flex;             align-items: center;             padding: 10px 15px;             text-decoration: none;             color: var(--text-color);             font-size: 0.95rem;             transition: background-color 0.2s;         }         .language-switcher-dropdown li a:hover {             background-color: #f0f5fa;         }         .language-switcher-dropdown li a .flag-icon {             width: 20px;             height: 15px;             border-radius: 3px; /* דגלים מלבניים בתפריט */         }         [dir="rtl"] .language-switcher-dropdown li a .flag-icon { margin-left: 10px; }         [dir="ltr"] .language-switcher-dropdown li a .flag-icon { margin-right: 10px; }          /* Hero Section */         .hero-section {             padding-top: 140px; /* פיצוי על ה-header הקבוע + ריווח */             padding-bottom: 80px;             background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1724472262703-1384f61249ee?q=80&w=1920&auto=format&fit=crop');             background-size: cover;             background-position: center;             color: var(--light-text-color);             text-align: center;         }         .hero-section h1 {             font-family: var(--font-primary);             font-size: 3.2rem;             font-weight: 700;             margin-bottom: 20px;             line-height: 1.2;             text-shadow: 2px 2px 6px rgba(0,0,0,0.5);         }         .hero-section .slogan {             font-size: 1.5rem;             margin-bottom: 30px;             font-weight: 300;             opacity: 0.9;         }         .hero-cta-button {             background-color: var(--primary-color);             color: #fff;             padding: 15px 35px;             text-decoration: none;             border-radius: 50px; /* כפתור עגול */             font-size: 1.1rem;             font-weight: 600;             transition: background-color 0.3s, transform 0.2s;             box-shadow: 0 4px 10px rgba(0,119,204,0.4);         }         .hero-cta-button:hover {             background-color: var(--secondary-color);             transform: translateY(-2px);         }          /* General Section Styling */         .content-section {             padding: 60px 0;         }         .section-title {             font-family: var(--font-primary);             font-size: 2.5rem;             font-weight: 600;             color: var(--primary-color);             text-align: center;             margin-bottom: 40px;             position: relative;         }         .section-title::after { /* קו דקורטיבי מתחת לכותרת */             content: '';             display: block;             width: 70px;             height: 3px;             background-color: var(--accent-color);             margin: 10px auto 0;             border-radius: 2px;         }          /* About Section */         #about {             background-color: var(--bg-light);         }         #about p, #about ul {             font-size: 1.1rem;             margin-bottom: 15px;             text-align: center;             max-width: 800px;             margin-left: auto;             margin-right: auto;         }         #about ul { list-style: none; }         #about ul li { margin-bottom: 8px; }         #about .service-icon {             color: var(--primary-color);             font-size: 1.3em; /* גודל יחסי לפונט */         }         [dir="rtl"] #about .service-icon { margin-left: 8px; }         [dir="ltr"] #about .service-icon { margin-right: 8px; }          /* Specializations Section */         #specializations {             background-color: #fff;         }         .specializations-grid {             display: grid;             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));             gap: 30px;         }         .specialization-card {             background-color: #fff;             border-radius: var(--border-radius);             box-shadow: var(--box-shadow);             padding: 25px;             text-align: center;             transition: transform 0.3s, box-shadow 0.3s;         }         .specialization-card:hover {             transform: translateY(-8px);             box-shadow: 0 10px 20px rgba(0,0,0,0.12);         }         .specialization-card .spec-icon {             font-size: 3rem; /* אייקונים גדולים */             color: var(--primary-color);             margin-bottom: 15px;             line-height: 1;         }         .specialization-card h3 {             font-family: var(--font-primary);             font-size: 1.4rem;             font-weight: 600;             margin-bottom: 10px;             color: var(--secondary-color);         }         .specialization-card p {             font-size: 0.95rem;             line-height: 1.6;         }          /* Why Choose Us Section */         #why-choose-us {             background-color: var(--bg-light);             /* רקע תמונת הים עם כיסוי */             background-image: linear-gradient(rgba(248, 249, 250, 0.9), rgba(248, 249, 250, 0.9)), url('https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?q=80&w=1920&auto=format&fit=crop');             background-size: cover;             background-position: center;             background-attachment: fixed; /* אפקט פרלקס עדין */         }         #why-choose-us .container > p { /* תיאור קצר מתחת לכותרת */             text-align: center;             font-size: 1.1rem;             margin-bottom: 40px;             max-width: 700px;             margin-left: auto;             margin-right: auto;         }         .benefits-grid {             display: grid;             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));             gap: 25px;         }         .benefit-item {             background-color: rgba(255,255,255,0.95); /* רקע בהיר יותר לכרטיסים */             padding: 20px;             border-radius: var(--border-radius);             box-shadow: 0 4px 8px rgba(0,0,0,0.08);             display: flex;             align-items: flex-start; /* יישור אייקון וטקסט */         }         .benefit-item .benefit-icon {             font-size: 1.8rem;             color: var(--accent-color);             line-height: 1;         }         [dir="rtl"] .benefit-item .benefit-icon { margin-left: 15px; }         [dir="ltr"] .benefit-item .benefit-icon { margin-right: 15px; }         .benefit-item div h4 {             font-family: var(--font-primary);             font-size: 1.2rem;             font-weight: 600;             margin-bottom: 5px;             color: var(--secondary-color);         }         .benefit-item div p {             font-size: 0.9rem;         }          /* Contact Section */         #contact {             background-color: #fff;         }         .contact-intro {             text-align: center;             font-size: 1.15rem;             margin-bottom: 30px;             max-width: 750px;             margin-left: auto;             margin-right: auto;         }         .contact-methods {             display: flex;             justify-content: center;             align-items: center;             gap: 25px;             flex-wrap: wrap; /* למקרה של מסכים קטנים */         }         .contact-method-button {             display: inline-flex;             align-items: center;             justify-content: center;             padding: 12px 25px;             text-decoration: none;             border-radius: 50px;             font-size: 1.1rem;             font-weight: 500;             transition: transform 0.2s, box-shadow 0.2s;             box-shadow: 0 3px 8px rgba(0,0,0,0.1);             min-width: 200px; /* רוחב מינימלי לכפתורים */         }         .contact-method-button .contact-icon {             width: 24px;             height: 24px;             fill: #fff;         }         [dir="rtl"] .contact-method-button .contact-icon { margin-left: 10px; }         [dir="ltr"] .contact-method-button .contact-icon { margin-right: 10px; }          .contact-method-button.whatsapp {             background-color: #25D366;             color: #fff;         }         .contact-method-button.whatsapp:hover {             background-color: #1DAE52;             transform: translateY(-2px);             box-shadow: 0 5px 12px rgba(30,174,82,0.3);         }         .contact-method-button.instagram {             background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);             color: #fff;         }         .contact-method-button.instagram:hover {             opacity: 0.9;             transform: translateY(-2px);             box-shadow: 0 5px 12px rgba(220,39,67,0.3);         }          /* Modal Styling */         .modal {             display: none;             position: fixed;             z-index: 1010; /* מעל ה-header */             left: 0;             top: 0;             width: 100%;             height: 100%;             overflow-y: auto; /* גלילה רק אם התוכן ארוך */             background-color: rgba(0,0,0,0.7);             animation: fadeInModalBg 0.3s ease-out;             padding: 20px 0; /* ריווח עליון ותחתון במקרה של גלילה */         }         @keyframes fadeInModalBg { from { opacity: 0; } to { opacity: 1; } }          .modal-content {             background-color: #fff;             margin: 5% auto; /* מאפשר גלילה אם התוכן גבוה מהמסך */             padding: 30px 35px;             border-radius: var(--border-radius);             width: 90%;             max-width: 500px; /* רוחב מודל */             position: relative;             box-shadow: 0 10px 30px rgba(0,0,0,0.15);             animation: slideInModalContent 0.35s ease-out;         }         @keyframes slideInModalContent {             from { transform: translateY(-50px) scale(0.98); opacity: 0; }             to { transform: translateY(0) scale(1); opacity: 1; }         }          .modal-header {             display: flex;             justify-content: space-between;             align-items: center;             margin-bottom: 20px;             padding-bottom: 15px;             border-bottom: 1px solid #eee;         }         .modal-header h3 {             font-family: var(--font-primary);             font-size: 1.7rem;             color: var(--primary-color);             margin: 0;         }         .close-button {             background: none;             border: none;             font-size: 2rem;             color: #aaa;             cursor: pointer;             padding: 0;             line-height: 1;             transition: color 0.2s;         }         .close-button:hover { color: var(--text-color); }          .modal-body .form-group { margin-bottom: 18px; }         .modal-body label {             display: block;             margin-bottom: 6px;             font-weight: 600;             font-size: 0.9rem;             color: #555;         }         .modal-body input[type="text"], .modal-body select {             width: 100%;             padding: 12px;             border: 1px solid #ccc;             border-radius: 6px;             font-size: 1rem;             font-family: var(--font-secondary);             transition: border-color 0.2s, box-shadow 0.2s;         }         .modal-body input[type="text"]:focus, .modal-body select:focus {             border-color: var(--primary-color);             box-shadow: 0 0 0 3px rgba(0,119,204,0.15);             outline: none;         }         .modal-body select {             appearance: none; /* הסרת עיצוב ברירת מחדל */             -webkit-appearance: none;             -moz-appearance: none;             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23888'%3E%3Cpath d='M8 11.207L2.396 5.604a.5.5 0 01.708-.708L8 9.793l4.896-4.897a.5.5 0 01.708.708L8 11.207z'/%3E%3C/svg%3E");             background-repeat: no-repeat;             background-size: 12px;             cursor: pointer;         }         [dir="rtl"] .modal-body select { background-position: left 15px center; padding-left: 35px; }         [dir="ltr"] .modal-body select { background-position: right 15px center; padding-right: 35px; }          .modal-footer button {             background-color: var(--primary-color);             color: #fff;             padding: 12px 25px;             border: none;             border-radius: 50px;             font-size: 1rem;             font-weight: 600;             cursor: pointer;             width: 100%;             transition: background-color 0.3s, transform 0.2s;         }         .modal-footer button:hover {             background-color: var(--secondary-color);             transform: translateY(-1px);         }         .autocomplete-container { position: relative; }         .suggestions-list {             border: 1px solid #ddd;             border-top: none;             max-height: 150px;             overflow-y: auto;             background-color: white;             position: absolute;             width: 100%;             z-index: 10;             box-shadow: 0 5px 10px rgba(0,0,0,0.1);             border-radius: 0 0 6px 6px;         }         .suggestions-list div { padding: 10px; cursor: pointer; font-size: 0.95rem; }         .suggestions-list div:hover { background-color: #f0f5fa; }          /* Footer */         .site-footer {             background-color: var(--text-color);             color: var(--light-text-color);             padding: 40px 0;             text-align: center;             font-size: 0.9rem;         }         .site-footer p { margin: 0; opacity: 0.8; }          /* Animation on scroll */         .animate-on-scroll {             opacity: 0;             transform: translateY(30px);             transition: opacity 0.6s ease-out, transform 0.6s ease-out;         }         .animate-on-scroll.is-visible {             opacity: 1;             transform: translateY(0);         }          /* Responsive adjustments */         @media (max-width: 768px) {             .logo { font-size: 1.5rem; }             .hero-section h1 { font-size: 2.5rem; }             .hero-section .slogan { font-size: 1.2rem; }             .section-title { font-size: 2rem; }             .specializations-grid, .benefits-grid { grid-template-columns: 1fr; } /* עמודה אחת בנייד */             .modal-content { margin: 10% auto; }         }      </style>     <script type="module">       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";       import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";        const firebaseConfig = {         apiKey: "AIzaSyCHA3zQ-8qzDmTHjCJw8dKphfr0-a1r9_0",         authDomain: "nofesh-d7ebe.firebaseapp.com",         projectId: "nofesh-d7ebe",         storageBucket: "nofesh-d7ebe.firebasestorage.app",         messagingSenderId: "5256668706",         appId: "1:5256668706:web:533958bc06165a612c4c7b",         measurementId: "G-99KTGDGZNX"       };        const app = initializeApp(firebaseConfig);       window.db = getFirestore(app);       window.getDoc = getDoc;       window.doc = doc;     </script> </head> <body>     <header class="site-header">         <div class="container">             <a href="#" class="logo" data-lang-key="logoTextMain">דורון <span data-lang-key="logoTextSub">נקש</span></a>             <div class="language-switcher" id="languageSwitcher">                 <button class="language-switcher-button" aria-haspopup="true" aria-expanded="false">                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' width='24' height='18'%3E%3Crect width='120' height='80' fill='%23fff'/%3E%3Crect width='120' height='15' y='10' fill='%230038b8'/%3E%3Crect width='120' height='15' y='55' fill='%230038b8'/%3E%3Cpath d='M60 30 L50 47 H70 Z M60 50 L50 33 H70 Z' fill='%230038b8'/%3E%3C/svg%3E" alt="Hebrew" class="flag-icon" id="currentFlag">                     <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 11.207L2.396 5.604a.5.5 0 01.708-.708L8 9.793l4.896-4.897a.5.5 0 01.708.708L8 11.207z"/></svg>                 </button>                 <div class="language-switcher-dropdown">                     <ul>                         <li><a href="#" onclick="changeLanguage('he', this); return false;">                             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' width='20' height='15'%3E%3Crect width='120' height='80' fill='%23fff'/%3E%3Crect width='120' height='15' y='10' fill='%230038b8'/%3E%3Crect width='120' height='15' y='55' fill='%230038b8'/%3E%3Cpath d='M60 30 L50 47 H70 Z M60 50 L50 33 H70 Z' fill='%230038b8'/%3E%3C/svg%3E" alt="Hebrew" class="flag-icon">                             <span data-lang-key="langHe">עברית</span>                         </a></li>                         <li><a href="#" onclick="changeLanguage('en', this); return false;">                              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' width='20' height='15'%3E%3CclipPath id='a'%3E%3Cpath d='M0 0v30h60V0z'/%3E%3C/clipPath%3E%3Cpath d='M0 0v30h60V0z' fill='%23012169'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23fff' stroke-width='6' clip-path='url(%23a)'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23C8102E' stroke-width='4' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23fff' stroke-width='10' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23C8102E' stroke-width='6' clip-path='url(%23a)'/%3E%3C/svg%3E" alt="English" class="flag-icon">                             <span data-lang-key="langEn">English</span>                         </a></li>                         <li><a href="#" onclick="changeLanguage('fr', this); return false;">                             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600' width='20' height='15'%3E%3Crect width='300' height='600' fill='%23002654'/%3E%3Crect width='300' height='600' x='300' fill='%23fff'/%3E%3Crect width='300' height='600' x='600' fill='%23ED2939'/%3E%3C/svg%3E" alt="Français" class="flag-icon">                             <span data-lang-key="langFr">Français</span>                         </a></li>                     </ul>                 </div>             </div>         </div>     </header>      <main>         <section class="hero-section">             <div class="container">                 <h1 data-lang-key="heroTitle">תכנון החופשה המושלמת, בדיוק בשבילכם.</h1>                 <p class="slogan" data-lang-key="heroSlogan">עם דורון נקש, כל יעד הופך לחוויה בלתי נשכחת. מחירים מנצחים ושירות אישי עד הפרט האחרון.</p>                 <a href="#contact" class="hero-cta-button" data-lang-key="heroCta">בואו נתחיל לתכנן!</a>             </div>         </section>          <section id="about" class="content-section animate-on-scroll">             <div class="container">                 <h2 class="section-title" data-lang-key="aboutTitle">המומחיות שלי היא החופשה שלכם</h2>                 <p data-lang-key="aboutDescIntro">אני כאן כדי להפוך כל חלום על חופשה למציאות. בין אם אתם מחפשים טיסה, מלון, או חבילה מלאה, אני דואג לכל הפרטים:</p>                 <ul>                     <li data-lang-html-key="aboutServicePackage"><span class="service-icon">📦</span> חבילות טיסה + מלון מותאמות אישית</li>                     <li data-lang-html-key="aboutServiceFlight"><span class="service-icon">✈️</span> מציאת הטיסות המשתלמות ביותר</li>                     <li data-lang-html-key="aboutServiceHotel"><span class="service-icon">🏨</span> המלצות וקישורים להזמנת מלונות במחירים מעולים (ללא עמלת תיווך!)</li>                 </ul>                 <p data-lang-html-key="aboutHotelBookingInfo"><strong>הזמנת מלון?</strong> אני מאתר עבורכם את האפשרויות הטובות ביותר ושולח קישור ישיר להזמנה – אתם חוסכים, ואני שמח לעזור!</p>                 <p data-lang-html-key="aboutPackageCommission"><strong>חבילות וטיסות:</strong> עמלה תחרותית של 3-5% בלבד, עם שקיפות מלאה.</p>             </div>         </section>          <section id="specializations" class="content-section animate-on-scroll">             <div class="container">                 <h2 class="section-title" data-lang-key="specializationsTitle">התמחויות מיוחדות</h2>                 <div class="specializations-grid">                     <div class="specialization-card">                         <div class="spec-icon">🏙️</div>                         <h3 data-lang-key="specCityTitle">חופשות עיר תוססות</h3>                         <p data-lang-key="specCityDesc">גלו את הערים המרתקות בעולם, עם מסלולים מותאמים אישית וטיפים מקומיים.</p>                     </div>                     <div class="specialization-card">                         <div class="spec-icon">🏖️</div>                         <h3 data-lang-key="specBeachTitle">נופש חופים חלומי</h3>                         <p data-lang-key="specBeachDesc">מהחופים האקזוטיים ועד לאתרי הנופש היוקרתיים ביותר – החופשה המושלמת מחכה לכם.</p>                     </div>                     <div class="specialization-card">                         <div class="spec-icon">💖</div>                         <h3 data-lang-key="specRomanticTitle">חבילות רומנטיות</h3>                         <p data-lang-key="specRomanticDesc">ירח דבש, הצעות נישואין או סתם חופשה זוגית מפנקת – אני כאן ליצור רגעים בלתי נשכחים.</p>                     </div>                 </div>             </div>         </section>          <section id="why-choose-us" class="content-section animate-on-scroll">             <div class="container">                 <h2 class="section-title" data-lang-key="whyChooseUsTitle">למה לבחור בשירות שלי?</h2>                 <p data-lang-key="whyChooseUsIntro">השאיפה שלי היא לספק לכם לא רק חופשה, אלא חוויה שלמה, עם שקט נפשי ושירות שמלווה אתכם בכל שלב.</p>                 <div class="benefits-grid">                     <div class="benefit-item">                         <span class="benefit-icon">🤝</span>                         <div>                             <h4 data-lang-key="benefitPersonalServiceTitle">שירות אישי ומסור</h4>                             <p data-lang-key="benefitPersonalServiceDesc">הקשבה מלאה לצרכים שלכם, התאמה אישית של כל פרט, וזמינות גבוהה.</p>                         </div>                     </div>                     <div class="benefit-item">                         <span class="benefit-icon">💰</span>                         <div>                             <h4 data-lang-key="benefitBestDealsTitle">מחירים ללא תחרות</h4>                             <p data-lang-key="benefitBestDealsDesc">חיפוש מעמיק למציאת הדילים הטובים ביותר, תוך שמירה על שקיפות מלאה.</p>                         </div>                     </div>                     <div class="benefit-item">                         <span class="benefit-icon">🗺️</span>                         <div>                             <h4 data-lang-key="benefitExpertiseTitle">ידע וניסיון מקצועי</h4>                             <p data-lang-key="benefitExpertiseDesc">היכרות עם מגוון יעדים, ספקים וטיפים שישדרגו לכם את החופשה.</p>                         </div>                     </div>                     <div class="benefit-item">                         <span class="benefit-icon">⏰</span>                         <div>                             <h4 data-lang-key="benefitTimeSavingTitle">חיסכון בזמן ומאמץ</h4>                             <p data-lang-key="benefitTimeSavingDesc">אני עושה את כל העבודה המורכבת של תכנון והשוואות, אתם רק אורזים!</p>                         </div>                     </div>                 </div>             </div>         </section>          <section id="contact" class="content-section animate-on-scroll">             <div class="container">                 <h2 class="section-title" data-lang-key="contactTitle">מוכנים לחופשה הבאה שלכם?</h2>                 <p class="contact-intro" data-lang-key="contactIntro">אני זמין לכל שאלה, בקשה או התייעצות. בואו נתכנן יחד את החופשה שתמיד חלמתם עליה!</p>                 <div class="contact-methods">                     <a href="#" onclick="openWhatsAppModal(); return false;" class="contact-method-button whatsapp">                         <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.037C6.492 2.037 2 6.52 2 12.001c0 1.752.462 3.428 1.324 4.884l-1.35 4.927 5.046-1.328a9.928 9.928 0 004.98.991h.002c5.508 0 9.998-4.482 9.998-9.964S17.508 2.037 12 2.037zm0 18.246h-.002a8.236 8.236 0 01-4.193-1.186l-.299-.178-3.112.816.828-3.034-.196-.312a8.264 8.264 0 01-1.28-4.383c0-4.563 3.706-8.268 8.268-8.268s8.268 3.705 8.268 8.268-3.706 8.268-8.268 8.268zm4.545-5.927c-.246-.123-1.454-.716-1.68-.797-.226-.081-.39-.123-.555.123-.165.246-.635.797-.779.962-.144.165-.288.185-.534.062-.246-.123-.952-.374-1.926-1.186s-1.558-1.454-1.804-1.926c-.246-.472-.012-.705.11-.828.11-.11.246-.288.37-.432.123-.144.165-.246.246-.41.081-.165.04-.308-.02-.432-.062-.123-.555-1.328-.76-1.824-.205-.48-.41-.41-.555-.418h-.144c-.165 0-.432.062-.657.308-.226.246-.863.843-.863 2.05s.884 2.378 1.007 2.543c.123.165 1.743 2.662 4.23 3.74.59.26 1.05.41 1.41.534.59.185 1.13.165 1.56.103.472-.081 1.454-.59 1.66-.983.205-.39.205-.737.144-.843-.061-.103-.225-.165-.471-.288z"/></svg>                         <span data-lang-key="contactWhatsapp">דברו איתי בוואטסאפ</span>                     </a>                     <a href="https://www.instagram.com/nofesh_li/" target="_blank" class="contact-method-button instagram">                          <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4c2.21 0 4 1.791 4 4s-1.79 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>                         <span data-lang-key="contactInstagram">עקבו אחריי באינסטגרם</span>                     </a>                 </div>             </div>         </section>     </main>      <div id="whatsappModal" class="modal">         <div class="modal-content">             <div class="modal-header">                 <h3 data-lang-key="modalTitle">פרטי בקשת הצעת מחיר</h3>                 <button class="close-button" onclick="closeWhatsAppModal()" aria-label="Close">×</button>             </div>             <div class="modal-body">                 <div class="form-group autocomplete-container">                     <label for="country" data-lang-key="countryLabel">מדינה (אופציונלי):</label>                     <input type="text" id="country" oninput="debouncedFetchSuggestions('country', this.value)" autocomplete="off">                     <div id="countrySuggestions" class="suggestions-list"></div>                 </div>                 <div class="form-group autocomplete-container">                     <label for="city" data-lang-key="cityLabel">עיר (אופציונלי):</label>                     <input type="text" id="city" oninput="debouncedFetchSuggestions('city', this.value)" autocomplete="off">                     <div id="citySuggestions" class="suggestions-list"></div>                 </div>                 <div class="form-group">                     <label for="serviceType" data-lang-key="serviceTypeLabel">סוג שירות מבוקש:</label>                     <select id="serviceType">                         <option value="package" data-lang-key="servicePackage">חבילת טיסה + מלון</option>                         <option value="flight" data-lang-key="serviceFlight">טיסה בלבד</option>                         <option value="hotel" data-lang-key="serviceHotel">מלון בלבד</option>                     </select>                 </div>             </div>             <div class="modal-footer">                 <button onclick="sendWhatsAppMessage()" data-lang-key="sendToWhatsappBtn">שליחת בקשה בוואטסאפ</button>             </div>         </div>     </div>      <footer class="site-footer">         <div class="container">             <p data-lang-html-key="footerText">© <span id="currentYear">2025</span> דורון נקש. סוכן הנסיעות האישי שלך לחופשות חלומיות.</p>         </div>     </footer>      <script>         // ==== Translations ====         const translations = {             he: {                 logoTextMain: "דורון",                 logoTextSub: "נקש",                 langHe: "עברית",                 langEn: "English",                 langFr: "Français",                 heroTitle: "תכנון החופשה המושלמת, בדיוק בשבילכם.",                 heroSlogan: "עם דורון נקש, כל יעד הופך לחוויה בלתי נשכחת. מחירים מנצחים ושירות אישי עד הפרט האחרון.",                 heroCta: "בואו נתחיל לתכנן!",                 aboutTitle: "המומחיות שלי היא החופשה שלכם",                 aboutDescIntro: "אני כאן כדי להפוך כל חלום על חופשה למציאות. בין אם אתם מחפשים טיסה, מלון, או חבילה מלאה, אני דואג לכל הפרטים:",                 aboutServicePackage: "<span class=\"service-icon\">📦</span> חבילות טיסה + מלון מותאמות אישית",                 aboutServiceFlight: "<span class=\"service-icon\">✈️</span> מציאת הטיסות המשתלמות ביותר",                 aboutServiceHotel: "<span class=\"service-icon\">🏨</span> המלצות וקישורים להזמנת מלונות במחירים מעולים (ללא עמלת תיווך!)",                 aboutHotelBookingInfo: "<strong>הזמנת מלון?</strong> אני מאתר עבורכם את האפשרויות הטובות ביותר ושולח קישור ישיר להזמנה – אתם חוסכים, ואני שמח לעזור!",                 aboutPackageCommission: "<strong>חבילות וטיסות:</strong> עמלה תחרותית של 3-5% בלבד, עם שקיפות מלאה.",                 specializationsTitle: "התמחויות מיוחדות",                 specCityTitle: "חופשות עיר תוססות",                 specCityDesc: "גלו את הערים המרתקות בעולם, עם מסלולים מותאמים אישית וטיפים מקומיים.",                 specBeachTitle: "נופש חופים חלומי",                 specBeachDesc: "מהחופים האקזוטיים ועד לאתרי הנופש היוקרתיים ביותר – החופשה המושלמת מחכה לכם.",                 specRomanticTitle: "חבילות רומנטיות",                 specRomanticDesc: "ירח דבש, הצעות נישואין או סתם חופשה זוגית מפנקת – אני כאן ליצור רגעים בלתי נשכחים.",                 whyChooseUsTitle: "למה לבחור בשירות שלי?",                 whyChooseUsIntro: "השאיפה שלי היא לספק לכם לא רק חופשה, אלא חוויה שלמה, עם שקט נפשי ושירות שמלווה אתכם בכל שלב.",                 benefitPersonalServiceTitle: "שירות אישי ומסור",                 benefitPersonalServiceDesc: "הקשבה מלאה לצרכים שלכם, התאמה אישית של כל פרט, וזמינות גבוהה.",                 benefitBestDealsTitle: "מחירים ללא תחרות",                 benefitBestDealsDesc: "חיפוש מעמיק למציאת הדילים הטובים ביותר, תוך שמירה על שקיפות מלאה.",                 benefitExpertiseTitle: "ידע וניסיון מקצועי",                 benefitExpertiseDesc: "היכרות עם מגוון יעדים, ספקים וטיפים שישדרגו לכם את החופשה.",                 benefitTimeSavingTitle: "חיסכון בזמן ומאמץ",                 benefitTimeSavingDesc: "אני עושה את כל העבודה המורכבת של תכנון והשוואות, אתם רק אורזים!",                 contactTitle: "מוכנים לחופשה הבאה שלכם?",                 contactIntro: "אני זמין לכל שאלה, בקשה או התייעצות. בואו נתכנן יחד את החופשה שתמיד חלמתם עליה!",                 contactWhatsapp: "דברו איתי בוואטסאפ",                 contactInstagram: "עקבו אחריי באינסטגרם",                 modalTitle: "פרטי בקשת הצעת מחיר",                 countryLabel: "מדינה (אופציונלי):",                 cityLabel: "עיר (אופציונלי):",                 serviceTypeLabel: "סוג שירות מבוקש:",                 servicePackage: "חבילת טיסה + מלון",                 serviceFlight: "טיסה בלבד",                 serviceHotel: "מלון בלבד",                 sendToWhatsappBtn: "שליחת בקשה בוואטסאפ",                 footerText: "© <span id='currentYearFooterHe'>2025</span> דורון נקש. סוכן הנסיעות האישי שלך לחופשות חלומיות.",                 whatsappGreeting: "היי דורון",                 whatsappRequestInfo: "אשמח לקבל פרטים והצעה עבור",                 whatsappServiceFlight: "טיסה",                 whatsappServiceHotel: "מלון",                 whatsappServicePackage: "חבילה של טיסה ומלון",                 whatsappInCity: "ב",                 whatsappInCountry: "שב",                 selectCountryPlaceholder: "הקלד/י שם מדינה...",                 selectCityPlaceholder: "הקלד/י שם עיר...",                 loadingText: "טוען הצעות...",                 noSuggestionsFound: "לא נמצאו הצעות התואמות לחיפוש.",                 errorLoadingSuggestions: "אירעה שגיאה בטעינת ההצעות."             },             en: {                 logoTextMain: "Doron",                 logoTextSub: "Nakash",                 langHe: "עברית",                 langEn: "English",                 langFr: "Français",                 heroTitle: "Planning Your Perfect Vacation, Just For You.",                 heroSlogan: "With Doron Nakash, every destination becomes an unforgettable experience. Unbeatable prices and personal service down to the last detail.",                 heroCta: "Let's Start Planning!",                 aboutTitle: "My Expertise is Your Vacation",                 aboutDescIntro: "I'm here to turn every vacation dream into reality. Whether you're looking for a flight, hotel, or a full package, I take care of all the details:",                 aboutServicePackage: "<span class=\"service-icon\">📦</span> Custom Flight + Hotel Packages",                 aboutServiceFlight: "<span class=\"service-icon\">✈️</span> Finding the Most Affordable Flights",                 aboutServiceHotel: "<span class=\"service-icon\">🏨</span> Recommendations and Links for Hotel Bookings at Great Prices (No Brokerage Fee!)",                 aboutHotelBookingInfo: "<strong>Hotel Booking?</strong> I find the best options for you and send a direct booking link – you save, and I'm happy to help!",                 aboutPackageCommission: "<strong>Packages and Flights:</strong> A competitive commission of only 3-5%, with full transparency.",                 specializationsTitle: "Specializations",                 specCityTitle: "Vibrant City Getaways",                 specCityDesc: "Discover fascinating cities worldwide with custom itineraries and local tips.",                 specBeachTitle: "Dreamy Beach Vacations",                 specBeachDesc: "From exotic beaches to the most luxurious resorts – your perfect vacation awaits.",                 specRomanticTitle: "Romantic Packages",                 specRomanticDesc: "Honeymoons, marriage proposals, or just a pampering couple's getaway – I'm here to create unforgettable moments.",                 whyChooseUsTitle: "Why Choose My Service?",                 whyChooseUsIntro: "My goal is to provide you not just with a vacation, but a complete experience, with peace of mind and service that accompanies you every step of the way.",                 benefitPersonalServiceTitle: "Personal & Dedicated Service",                 benefitPersonalServiceDesc: "Full attention to your needs, personalization of every detail, and high availability.",                 benefitBestDealsTitle: "Unbeatable Prices",                 benefitBestDealsDesc: "In-depth search to find the best deals, while maintaining full transparency.",                 benefitExpertiseTitle: "Professional Knowledge & Experience",                 benefitExpertiseDesc: "Familiarity with a variety of destinations, suppliers, and tips that will upgrade your vacation.",                 benefitTimeSavingTitle: "Save Time & Effort",                 benefitTimeSavingDesc: "I do all the complex work of planning and comparisons, you just pack!",                 contactTitle: "Ready for Your Next Vacation?",                 contactIntro: "I'm available for any questions, requests, or consultations. Let's plan the vacation you've always dreamed of together!",                 contactWhatsapp: "Chat on WhatsApp",                 contactInstagram: "Follow on Instagram",                 modalTitle: "Quote Request Details",                 countryLabel: "Country (optional):",                 cityLabel: "City (optional):",                 serviceTypeLabel: "Requested service type:",                 servicePackage: "Flight + Hotel Package",                 serviceFlight: "Flight Only",                 serviceHotel: "Hotel Only",                 sendToWhatsappBtn: "Send Request via WhatsApp",                 footerText: "© <span id='currentYearFooterEn'>2025</span> Doron Nakash. Your Personal Travel Agent for Dream Vacations.",                 whatsappGreeting: "Hi Doron",                 whatsappRequestInfo: "I'd like to get details and a quote for a",                 whatsappServiceFlight: "flight",                 whatsappServiceHotel: "hotel",                 whatsappServicePackage: "flight and hotel package",                 whatsappInCity: "in",                 whatsappInCountry: "in",                 selectCountryPlaceholder: "Type a country name...",                 selectCityPlaceholder: "Type a city name...",                 loadingText: "Loading suggestions...",                 noSuggestionsFound: "No suggestions matching your search.",                 errorLoadingSuggestions: "An error occurred while loading suggestions."             },             fr: {                 logoTextMain: "Doron",                 logoTextSub: "Nakash",                 langHe: "עברית",                 langEn: "English",                 langFr: "Français",                 heroTitle: "Planifier Vos Vacances Parfaites, Juste Pour Vous.",                 heroSlogan: "Avec Doron Nakash, chaque destination devient une expérienceinoubliable. Prix imbattables et service personnalisé jusqu'au moindre détail.",                 heroCta: "Commençons à Planifier !",                 aboutTitle: "Mon Expertise, Vos Vacances",                 aboutDescIntro: "Je suis là pour transformer chaque rêve de vacances en réalité. Que vous cherchiez un vol, un hôtel ou un forfait complet, je m'occupe de tous les détails :",                 aboutServicePackage: "<span class=\"service-icon\">📦</span> Forfaits Vol + Hôtel Personnalisés",                 aboutServiceFlight: "<span class=\"service-icon\">✈️</span> Recherche des Vols les Plus Abordables",                 aboutServiceHotel: "<span class=\"service-icon\">🏨</span> Recommandations et Liens pour Réservations d'Hôtels à d'Excellents Prix (Sans Frais de Courtage !)",                 aboutHotelBookingInfo: "<strong>Réservation d'hôtel ?</strong> Je trouve les meilleures options pour vous et vous envoie un lien de réservation direct – vous économisez, et je suis heureux de vous aider !",                 aboutPackageCommission: "<strong>Forfaits et Vols :</strong> Une commission compétitive de seulement 3-5%, en toute transparence.",                 specializationsTitle: "Spécialisations",                 specCityTitle: "Escapades Urbaines Vibrantes",                 specCityDesc: "Découvrez des villes fascinantes à travers le monde, avec des itinéraires personnalisés et des conseils locaux.",                 specBeachTitle: "Vacances de Rêve à la Plage",                 specBeachDesc: "Des plages exotiques aux complexes hôteliers les plus luxueux – vos vacances parfaites vous attendent.",                 specRomanticTitle: "Forfaits Romantiques",                 specRomanticDesc: "Lunes de miel, demandes en mariage, ou simplement une escapade en couple – je suis là pour créer des moments inoubliables.",                 whyChooseUsTitle: "Pourquoi Choisir Mon Service ?",                 whyChooseUsIntro: "Mon objectif est de vous offrir non seulement des vacances, mais une expérience complète, avec tranquillité d'esprit et un service qui vous accompagne à chaque étape.",                 benefitPersonalServiceTitle: "Service Personnalisé et Dédié",                 benefitPersonalServiceDesc: "Pleine attention à vos besoins, personnalisation de chaque détail et grande disponibilité.",                 benefitBestDealsTitle: "Prix Imbattables",                 benefitBestDealsDesc: "Recherche approfondie pour trouver les meilleures offres, tout en maintenant une transparence totale.",                 benefitExpertiseTitle: "Savoir-Faire et Expérience Professionnelle",                 benefitExpertiseDesc: "Familiarité avec une variété de destinations, de fournisseurs et de conseils qui amélioreront vos vacances.",                 benefitTimeSavingTitle: "Économisez Temps et Efforts",                 benefitTimeSavingDesc: "Je fais tout le travail complexe de planification et de comparaison, vous n'avez qu'à faire vos valises !",                 contactTitle: "Prêt pour Vos Prochaines Vacances ?",                 contactIntro: "Je suis disponible pour toute question, demande ou consultation. Planifions ensemble les vacances dont vous avez toujours rêvé !",                 contactWhatsapp: "Discuter sur WhatsApp",                 contactInstagram: "Suivez-moi sur Instagram",                 modalTitle: "Détails de la Demande de Devis",                 countryLabel: "Pays (optionnel) :",                 cityLabel: "Ville (optionnel) :",                 serviceTypeLabel: "Type de service demandé :",                 servicePackage: "Forfait Vol + Hôtel",                 serviceFlight: "Vol Uniquement",                 serviceHotel: "Hôtel Uniquement",                 sendToWhatsappBtn: "Envoyer la Demande via WhatsApp",                 footerText: "© <span id='currentYearFooterFr'>2025</span> Doron Nakash. Votre Agent de Voyage Personnel pour des Vacances de Rêve.",                 whatsappGreeting: "Salut Doron",                 whatsappRequestInfo: "J'aimerais obtenir des détails et un devis pour un",                 whatsappServiceFlight: "vol",                 whatsappServiceHotel: "hôtel",                 whatsappServicePackage: "forfait vol et hôtel",                 whatsappInCity: "à",                 whatsappInCountry: "en",                 selectCountryPlaceholder: "Tapez un nom de pays...",                 selectCityPlaceholder: "Tapez un nom de ville...",                 loadingText: "Chargement des suggestions...",                 noSuggestionsFound: "Aucune suggestion ne correspond à votre recherche.",                 errorLoadingSuggestions: "Une erreur s'est produite lors du chargement des suggestions."             }         };         // ==== End Translations ====          let currentLanguage = 'he';         let geonamesUsername = null; // Store GeoNames username          // Flags SVG data URLs         const flags = {             he: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' width='24' height='18'%3E%3Crect width='120' height='80' fill='%23fff'/%3E%3Crect width='120' height='15' y='10' fill='%230038b8'/%3E%3Crect width='120' height='15' y='55' fill='%230038b8'/%3E%3Cpath d='M60 30 L50 47 H70 Z M60 50 L50 33 H70 Z' fill='%230038b8'/%3E%3C/svg%3E",             en: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' width='24' height='18'%3E%3CclipPath id='a'%3E%3Cpath d='M0 0v30h60V0z'/%3E%3C/clipPath%3E%3Cpath d='M0 0v30h60V0z' fill='%23012169'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23fff' stroke-width='6' clip-path='url(%23a)'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23C8102E' stroke-width='4' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23fff' stroke-width='10' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23C8102E' stroke-width='6' clip-path='url(%23a)'/%3E%3C/svg%3E",             fr: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600' width='24' height='18'%3E%3Crect width='300' height='600' fill='%23002654'/%3E%3Crect width='300' height='600' x='300' fill='%23fff'/%3E%3Crect width='300' height='600' x='600' fill='%23ED2939'/%3E%3C/svg%3E"         };          async function fetchGeoNamesUsername() {             console.log("Attempting to fetch GeoNames username...");             if (!window.db || !window.getDoc || !window.doc) {                 console.error("Firestore not initialized. Retrying...");                 setTimeout(fetchGeoNamesUsername, 1000);                 return;             }             try {                 const docRef = window.doc(window.db, "settings", "geonames");                 const docSnap = await window.getDoc(docRef);                 if (docSnap.exists()) {                     geonamesUsername = docSnap.data().username;                     if (geonamesUsername) {                         console.log("GeoNames username loaded.");                     } else {                         console.error("GeoNames username field is missing or empty in Firestore.");                     }                 } else {                     console.error("GeoNames configuration document not found in Firestore (settings/geonames).");                 }             } catch (error) {                 console.error("Error fetching GeoNames username:", error);             }         }          function changeLanguage(lang) { // Removed clickedElement as it's not strictly needed here             currentLanguage = lang;             document.documentElement.lang = lang;             document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';              const currentFlagImg = document.getElementById('currentFlag');             if (currentFlagImg && flags[lang]) {                 currentFlagImg.src = flags[lang];                 const langKeyForAlt = `lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`;                 currentFlagImg.alt = translations[lang][langKeyForAlt] || lang;             }                          const switcher = document.getElementById('languageSwitcher');             if (switcher) switcher.classList.remove('open');              const langPack = translations[lang] || translations['he'];              document.querySelectorAll('[data-lang-key]').forEach(el => {                 const key = el.dataset.langKey;                 if (langPack[key] !== undefined) {                     el.textContent = langPack[key];                 }             });             document.querySelectorAll('[data-lang-html-key]').forEach(el => {                 const key = el.dataset.langHtmlKey;                 if (langPack[key] !== undefined) {                     el.innerHTML = langPack[key];                 }             });                          const countryInput = document.getElementById('country');             if (countryInput) countryInput.placeholder = langPack.selectCountryPlaceholder || '';             const cityInput = document.getElementById('city');             if (cityInput) cityInput.placeholder = langPack.selectCityPlaceholder || '';                          document.querySelectorAll('#serviceType option').forEach(option => {                 const key = option.dataset.langKey;                  if (langPack[key] !== undefined) {                     option.textContent = langPack[key];                 }             });             document.title = langPack.pageTitle || "דורון נקש - סוכן נסיעות";              updateFooterYear(); // Ensure year is updated on language change too         }          const modal = document.getElementById('whatsappModal');         function openWhatsAppModal() {             if(modal) {                 modal.style.display = 'block';                 document.body.style.overflow = 'hidden';             }         }         function closeWhatsAppModal() {             if(modal) {                 modal.style.display = 'none';                 document.body.style.overflow = '';             }             clearSuggestions('country');             clearSuggestions('city');         }         document.addEventListener('keydown', function(event) {             if (event.key === "Escape" && modal && modal.style.display === 'block') {                 closeWhatsAppModal();             }         });          function sendWhatsAppMessage() {             const country = document.getElementById('country').value.trim();             const city = document.getElementById('city').value.trim();             const serviceTypeElement = document.getElementById('serviceType');             const serviceTypeValue = serviceTypeElement.value;                          const langPack = translations[currentLanguage];             const selectedServiceOptionText = serviceTypeElement.options[serviceTypeElement.selectedIndex].text;              let message = `${langPack.whatsappGreeting}, ${langPack.whatsappRequestInfo} ${selectedServiceOptionText}`;             if (city) {                 message += ` ${langPack.whatsappInCity} ${city}`;             }             if (country) {                 message += (city ? ` ${langPack.whatsappInCountry}` : ` ${langPack.whatsappInCity}`) + ` ${country}`;             }             message += ".";              const whatsappNumber = "0584593847";             const internationalNumber = whatsappNumber.startsWith('0') ? `+972${whatsappNumber.substring(1)}` : whatsappNumber;                          const whatsappUrl = `https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`;             window.open(whatsappUrl, '_blank');             closeWhatsAppModal();         }          function debounce(func, delay) {             let timeout;             return function(...args) {                 clearTimeout(timeout);                 timeout = setTimeout(() => func.apply(this, args), delay);             };         }          async function fetchSuggestions(inputType, query) {             if (!geonamesUsername) {                 console.warn("GeoNames username not loaded. Suggestions may be unavailable.");                 const suggestionsList = document.getElementById(`${inputType}Suggestions`);                 if (suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px; color:orange;">${translations[currentLanguage].errorLoadingSuggestions || 'Service unavailable'}</div>`;                 return;             }             if (query.length < 2) {                 clearSuggestions(inputType);                 return;             }              const suggestionsListId = `${inputType}Suggestions`;             const suggestionsList = document.getElementById(suggestionsListId);             if(suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px;">${translations[currentLanguage].loadingText || 'טוען...'}</div>`;                          try {                 let url;                 const langForAPI = currentLanguage === 'he' ? 'he' : 'en';                  if (inputType === "country") {                     url = `https://secure.geonames.org/searchJSON?name_startsWith=${encodeURIComponent(query)}&featureClass=A&maxRows=5&lang=${langForAPI}&username=${geonamesUsername}`;                 } else {                     url = `https://secure.geonames.org/searchJSON?name_startsWith=${encodeURIComponent(query)}&featureClass=P&maxRows=5&lang=${langForAPI}&username=${geonamesUsername}`;                 }                 const response = await fetch(url);                 if (!response.ok) {                     console.error(`GeoNames API error for ${inputType}: ${response.status}, ${response.statusText}. URL: ${url}`);                     throw new Error(`API error: ${response.status}`);                 }                 const data = await response.json();                                  clearSuggestions(inputType);                  if (data.geonames && data.geonames.length > 0) {                     data.geonames.forEach(place => {                         const div = document.createElement('div');                         let displayName = place.name;                         if (inputType === 'city' && place.countryName && place.name.toLowerCase() !== place.countryName.toLowerCase()) {                             displayName += `, ${place.countryName}`;                         }                         div.textContent = displayName;                         div.onclick = () => {                             document.getElementById(inputType).value = place.name;                             clearSuggestions(inputType);                         };                         if(suggestionsList) suggestionsList.appendChild(div);                     });                 } else {                     if(suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px;">${translations[currentLanguage].noSuggestionsFound || 'לא נמצאו הצעות.'}</div>`;                 }             } catch (error) {                 console.error(`Error fetching ${inputType} suggestions:`, error);                 if(suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px; color:red;">${translations[currentLanguage].errorLoadingSuggestions || 'שגיאה בטעינת הצעות.'}</div>`;             }         }                  const debouncedFetchSuggestions = debounce(fetchSuggestions, 350);          function clearSuggestions(inputType) {             const suggestionsList = document.getElementById(`${inputType}Suggestions`);             if(suggestionsList) suggestionsList.innerHTML = '';         }                  const langSwitcherButton = document.querySelector('.language-switcher-button');         const langSwitcher = document.getElementById('languageSwitcher');         if (langSwitcherButton && langSwitcher) {             langSwitcherButton.addEventListener('click', (event) => {                 event.stopPropagation();                 langSwitcher.classList.toggle('open');                 const isExpanded = langSwitcher.classList.contains('open');                 langSwitcherButton.setAttribute('aria-expanded', isExpanded.toString());             });         }         document.addEventListener('click', (event) => {             if (langSwitcher && !langSwitcher.contains(event.target) && langSwitcher.classList.contains('open')) {                 langSwitcher.classList.remove('open');                 if (langSwitcherButton) langSwitcherButton.setAttribute('aria-expanded', 'false');             }         });          const animatedElements = document.querySelectorAll('.animate-on-scroll');         const observer = new IntersectionObserver((entries) => {             entries.forEach(entry => {                 if (entry.isIntersecting) {                     entry.target.classList.add('is-visible');                 }             });         }, { threshold: 0.1 });         animatedElements.forEach(el => observer.observe(el));                  function updateFooterYear() {             const year = new Date().getFullYear();             const yearSpan = document.getElementById('currentYear');              if(yearSpan) yearSpan.textContent = year;             // Update language-specific spans if they exist             const yearSpanHe = document.getElementById('currentYearFooterHe');             if(yearSpanHe) yearSpanHe.textContent = year;             const yearSpanEn = document.getElementById('currentYearFooterEn');             if(yearSpanEn) yearSpanEn.textContent = year;             const yearSpanFr = document.getElementById('currentYearFooterFr');             if(yearSpanFr) yearSpanFr.textContent = year;         }          document.addEventListener('DOMContentLoaded', () => {             console.log("DOM loaded. Initializing new design...");             fetchGeoNamesUsername();             changeLanguage(currentLanguage);              updateFooterYear();              // Smooth scroll for anchor links             document.querySelectorAll('a[href^="#"]').forEach(anchor => {                 anchor.addEventListener('click', function (e) {                     const hrefAttribute = this.getAttribute('href');                     // Check if it's a valid ID selector and not just "#"                     if (hrefAttribute && hrefAttribute.length > 1 && hrefAttribute.startsWith('#')) {                         const targetElement = document.querySelector(hrefAttribute);                         if (targetElement) {                             e.preventDefault(); // Prevent default jump                             targetElement.scrollIntoView({                                 behavior: 'smooth'                             });                         }                     } else if (hrefAttribute === '#') {                          e.preventDefault(); // Prevent jump to top for href="#"                     }                 });             });         });     </script> </body> </html> 
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דורון נקש - סוכן הנסיעות האישי שלך</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0077cc;
+            --secondary-color: #005fa3;
+            --accent-color: #f39c12;
+            --text-color: #34495e;
+            --light-text-color: #ecf0f1;
+            --bg-light: #f8f9fa;
+            --border-radius: 8px;
+            --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            --font-primary: 'Rubik', 'Assistant', sans-serif;
+            --font-secondary: 'Assistant', sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .site-header {
+            background-color: #fff;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transition: background-color 0.3s ease;
+        }
+        .site-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .logo span {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .language-switcher {
+            position: relative;
+        }
+        .language-switcher-button {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: border-color 0.3s;
+        }
+        .language-switcher-button:hover {
+            border-color: var(--primary-color);
+        }
+        .language-switcher-button .flag-icon {
+            width: 24px;
+            height: 18px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 3px rgba(0,0,0,0.2);
+        }
+        .language-switcher-button .arrow-down {
+            width: 10px;
+            height: 10px;
+            fill: var(--text-color);
+            transition: transform 0.3s;
+        }
+        [dir="rtl"] .language-switcher-button .arrow-down { margin-right: 8px; }
+        [dir="ltr"] .language-switcher-button .arrow-down { margin-left: 8px; }
+
+        .language-switcher-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 10;
+            min-width: 150px;
+            overflow: hidden;
+        }
+        [dir="rtl"] .language-switcher-dropdown { left: 0; }
+        [dir="ltr"] .language-switcher-dropdown { right: 0; }
+
+        .language-switcher.open .language-switcher-dropdown { display: block; }
+        .language-switcher.open .arrow-down { transform: rotate(180deg); }
+
+        .language-switcher-dropdown ul {
+            list-style: none;
+        }
+        .language-switcher-dropdown li a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            transition: background-color 0.2s;
+        }
+        .language-switcher-dropdown li a:hover {
+            background-color: #f0f5fa;
+        }
+        .language-switcher-dropdown li a .flag-icon {
+            width: 20px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        [dir="rtl"] .language-switcher-dropdown li a .flag-icon { margin-left: 10px; }
+        [dir="ltr"] .language-switcher-dropdown li a .flag-icon { margin-right: 10px; }
+
+        .hero-section {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1724472262703-1384f61249ee?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: var(--light-text-color);
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-family: var(--font-primary);
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+        }
+        .hero-section .slogan {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        .hero-cta-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0,119,204,0.4);
+        }
+        .hero-cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            padding: 60px 0;
+        }
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        #about {
+            background-color: var(--bg-light);
+        }
+        #about p, #about ul {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #about ul { list-style: none; }
+        #about ul li { margin-bottom: 8px; }
+        #about .service-icon {
+            color: var(--primary-color);
+            font-size: 1.3em;
+        }
+        [dir="rtl"] #about .service-icon { margin-left: 8px; }
+        [dir="ltr"] #about .service-icon { margin-right: 8px; }
+
+        #specializations {
+            background-color: #fff;
+        }
+        .specializations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .specialization-card {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .specialization-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+        .specialization-card .spec-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+        .specialization-card h3 {
+            font-family: var(--font-primary);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        .specialization-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        #why-choose-us {
+            background-color: var(--bg-light);
+            background-image: linear-gradient(rgba(248, 249, 250, 0.9), rgba(248, 249, 250, 0.9)), url('https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        #why-choose-us .container > p {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+        }
+        .benefit-item {
+            background-color: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: flex-start;
+        }
+        .benefit-item .benefit-icon {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+        [dir="rtl"] .benefit-item .benefit-icon { margin-left: 15px; }
+        [dir="ltr"] .benefit-item .benefit-icon { margin-right: 15px; }
+        .benefit-item div h4 {
+            font-family: var(--font-primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+        .benefit-item div p {
+            font-size: 0.9rem;
+        }
+
+        #contact {
+            background-color: #fff;
+        }
+        .contact-intro {
+            text-align: center;
+            font-size: 1.15rem;
+            margin-bottom: 30px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .contact-method-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 22px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            min-width: 180px;
+        }
+        .contact-method-button .contact-icon {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+        }
+        [dir="rtl"] .contact-method-button .contact-icon { margin-left: 8px; }
+        [dir="ltr"] .contact-method-button .contact-icon { margin-right: 8px; }
+
+        .contact-method-button.whatsapp {
+            background-color: #25D366;
+            color: #fff;
+        }
+        .contact-method-button.whatsapp:hover {
+            background-color: #1DAE52;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(30,174,82,0.3);
+        }
+        .contact-method-button.instagram {
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            color: #fff;
+        }
+        .contact-method-button.instagram:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(220,39,67,0.3);
+        }
+        .contact-method-button.formsubmit-btn {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+        .contact-method-button.formsubmit-btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0,95,163,0.3);
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1010;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeInModalBg 0.3s ease-out;
+            padding: 20px 0;
+        }
+        @keyframes fadeInModalBg { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 30px 35px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideInModalContent 0.35s ease-out;
+        }
+        @keyframes slideInModalContent {
+            from { transform: translateY(-50px) scale(0.98); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .modal-header h3 {
+            font-family: var(--font-primary);
+            font-size: 1.7rem;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #aaa;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .close-button:hover { color: var(--text-color); }
+
+        .modal-body .form-group { margin-bottom: 18px; }
+        .modal-body label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .modal-body input[type="text"], .modal-body input[type="tel"], .modal-body input[type="email"], .modal-body select, .modal-body textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: var(--font-secondary);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .modal-body input[type="text"]:focus, .modal-body input[type="tel"]:focus, .modal-body input[type="email"]:focus, .modal-body select:focus, .modal-body textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0,119,204,0.15);
+            outline: none;
+        }
+        .modal-body select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23888'%3E%3Cpath d='M8 11.207L2.396 5.604a.5.5 0 01.708-.708L8 9.793l4.896-4.897a.5.5 0 01.708.708L8 11.207z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: 12px;
+            cursor: pointer;
+        }
+        [dir="rtl"] .modal-body select { background-position: left 15px center; padding-left: 35px; }
+        [dir="ltr"] .modal-body select { background-position: right 15px center; padding-right: 35px; }
+
+        .modal-footer button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .modal-footer button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+        .autocomplete-container { position: relative; }
+        .suggestions-list {
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: white;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            border-radius: 0 0 6px 6px;
+        }
+        .suggestions-list div { padding: 10px; cursor: pointer; font-size: 0.95rem; }
+        .suggestions-list div:hover { background-color: #f0f5fa; }
+
+        /* Thank You Page Styling */
+        .thank-you-page {
+            display: none;
+            text-align: center;
+            padding: 80px 20px;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .thank-you-page h1 {
+            font-family: var(--font-primary);
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        .thank-you-page p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        .thank-you-page .back-home-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .thank-you-page .back-home-btn:hover {
+            background-color: #d88c0a;
+        }
+
+
+        .site-footer {
+            background-color: var(--text-color);
+            color: var(--light-text-color);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .site-footer p { margin: 0; opacity: 0.8; }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.5rem; }
+            .hero-section h1 { font-size: 2.5rem; }
+            .hero-section .slogan { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .specializations-grid, .benefits-grid { grid-template-columns: 1fr; }
+            .modal-content { margin: 10% auto; max-width: 95%; padding: 20px 25px;}
+            .contact-methods { flex-direction: column; gap: 15px; }
+            .contact-method-button { width: 100%; max-width: 300px; }
+        }
+
+    </style>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+      import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCHA3zQ-8qzDmTHjCJw8dKphfr0-a1r9_0",
+        authDomain: "nofesh-d7ebe.firebaseapp.com",
+        projectId: "nofesh-d7ebe",
+        storageBucket: "nofesh-d7ebe.firebasestorage.app",
+        messagingSenderId: "5256668706",
+        appId: "1:5256668706:web:533958bc06165a612c4c7b",
+        measurementId: "G-99KTGDGZNX"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      window.db = getFirestore(app);
+      window.getDoc = getDoc;
+      window.doc = doc;
+    </script>
+</head>
+<body>
+    <div id="main-content"> <header class="site-header">
+            <div class="container">
+                <a href="#" class="logo" data-lang-key="logoTextMain">דורון <span data-lang-key="logoTextSub">נקש</span></a>
+                <div class="language-switcher" id="languageSwitcher">
+                    <button class="language-switcher-button" aria-haspopup="true" aria-expanded="false">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' width='24' height='18'%3E%3Crect width='120' height='80' fill='%23fff'/%3E%3Crect width='120' height='15' y='10' fill='%230038b8'/%3E%3Crect width='120' height='15' y='55' fill='%230038b8'/%3E%3Cpath d='M60 30 L50 47 H70 Z M60 50 L50 33 H70 Z' fill='%230038b8'/%3E%3C/svg%3E" alt="Hebrew" class="flag-icon" id="currentFlag">
+                        <svg class="arrow-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 11.207L2.396 5.604a.5.5 0 01.708-.708L8 9.793l4.896-4.897a.5.5 0 01.708.708L8 11.207z"/></svg>
+                    </button>
+                    <div class="language-switcher-dropdown">
+                        <ul>
+                            <li><a href="#" onclick="changeLanguage('he'); return false;">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' width='20' height='15'%3E%3Crect width='120' height='80' fill='%23fff'/%3E%3Crect width='120' height='15' y='10' fill='%230038b8'/%3E%3Crect width='120' height='15' y='55' fill='%230038b8'/%3E%3Cpath d='M60 30 L50 47 H70 Z M60 50 L50 33 H70 Z' fill='%230038b8'/%3E%3C/svg%3E" alt="Hebrew" class="flag-icon">
+                                <span data-lang-key="langHe">עברית</span>
+                            </a></li>
+                            <li><a href="#" onclick="changeLanguage('en'); return false;">
+                                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' width='20' height='15'%3E%3CclipPath id='a'%3E%3Cpath d='M0 0v30h60V0z'/%3E%3C/clipPath%3E%3Cpath d='M0 0v30h60V0z' fill='%23012169'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23fff' stroke-width='6' clip-path='url(%23a)'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23C8102E' stroke-width='4' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23fff' stroke-width='10' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23C8102E' stroke-width='6' clip-path='url(%23a)'/%3E%3C/svg%3E" alt="English" class="flag-icon">
+                                <span data-lang-key="langEn">English</span>
+                            </a></li>
+                            <li><a href="#" onclick="changeLanguage('fr'); return false;">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600' width='20' height='15'%3E%3Crect width='300' height='600' fill='%23002654'/%3E%3Crect width='300' height='600' x='300' fill='%23fff'/%3E%3Crect width='300' height='600' x='600' fill='%23ED2939'/%3E%3C/svg%3E" alt="Français" class="flag-icon">
+                                <span data-lang-key="langFr">Français</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero-section">
+                <div class="container">
+                    <h1 data-lang-key="heroTitle">תכנון החופשה המושלמת, בדיוק בשבילכם.</h1>
+                    <p class="slogan" data-lang-key="heroSlogan">עם דורון נקש, כל יעד הופך לחוויה בלתי נשכחת. מחירים מנצחים ושירות אישי עד הפרט האחרון.</p>
+                    <a href="#contact" class="hero-cta-button" data-lang-key="heroCta">בואו נתחיל לתכנן!</a>
+                </div>
+            </section>
+
+            <section id="about" class="content-section animate-on-scroll">
+                <div class="container">
+                    <h2 class="section-title" data-lang-key="aboutTitle">המומחיות שלי היא החופשה שלכם</h2>
+                    <p data-lang-key="aboutDescIntro">אני כאן כדי להפוך כל חלום על חופשה למציאות. בין אם אתם מחפשים טיסה, מלון, או חבילה מלאה, אני דואג לכל הפרטים:</p>
+                    <ul>
+                        <li data-lang-html-key="aboutServicePackage"><span class="service-icon">📦</span> חבילות טיסה + מלון מותאמות אישית</li>
+                        <li data-lang-html-key="aboutServiceFlight"><span class="service-icon">✈️</span> מציאת הטיסות המשתלמות ביותר</li>
+                        <li data-lang-html-key="aboutServiceHotel"><span class="service-icon">🏨</span> המלצות וקישורים להזמנת מלונות במחירים מעולים (ללא עמלת תיווך!)</li>
+                    </ul>
+                    <p data-lang-html-key="aboutHotelBookingInfo"><strong>הזמנת מלון?</strong> אני מאתר עבורכם את האפשרויות הטובות ביותר ושולח קישור ישיר להזמנה – אתם חוסכים, ואני שמח לעזור!</p>
+                    <p data-lang-html-key="aboutPackageCommission"><strong>חבילות וטיסות:</strong> עמלה תחרותית של 3-5% בלבד, עם שקיפות מלאה.</p>
+                </div>
+            </section>
+
+            <section id="specializations" class="content-section animate-on-scroll">
+                <div class="container">
+                    <h2 class="section-title" data-lang-key="specializationsTitle">התמחויות מיוחדות</h2>
+                    <div class="specializations-grid">
+                        <div class="specialization-card">
+                            <div class="spec-icon">🏙️</div>
+                            <h3 data-lang-key="specCityTitle">חופשות עיר תוססות</h3>
+                            <p data-lang-key="specCityDesc">גלו את הערים המרתקות בעולם, עם מסלולים מותאמים אישית וטיפים מקומיים.</p>
+                        </div>
+                        <div class="specialization-card">
+                            <div class="spec-icon">🏖️</div>
+                            <h3 data-lang-key="specBeachTitle">נופש חופים חלומי</h3>
+                            <p data-lang-key="specBeachDesc">מהחופים האקזוטיים ועד לאתרי הנופש היוקרתיים ביותר – החופשה המושלמת מחכה לכם.</p>
+                        </div>
+                        <div class="specialization-card">
+                            <div class="spec-icon">💖</div>
+                            <h3 data-lang-key="specRomanticTitle">חבילות רומנטיות</h3>
+                            <p data-lang-key="specRomanticDesc">ירח דבש, הצעות נישואין או סתם חופשה זוגית מפנקת – אני כאן ליצור רגעים בלתי נשכחים.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="why-choose-us" class="content-section animate-on-scroll">
+                <div class="container">
+                    <h2 class="section-title" data-lang-key="whyChooseUsTitle">למה לבחור בשירות שלי?</h2>
+                    <p data-lang-key="whyChooseUsIntro">השאיפה שלי היא לספק לכם לא רק חופשה, אלא חוויה שלמה, עם שקט נפשי ושירות שמלווה אתכם בכל שלב.</p>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🤝</span>
+                            <div>
+                                <h4 data-lang-key="benefitPersonalServiceTitle">שירות אישי ומסור</h4>
+                                <p data-lang-key="benefitPersonalServiceDesc">הקשבה מלאה לצרכים שלכם, התאמה אישית של כל פרט, וזמינות גבוהה.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">💰</span>
+                            <div>
+                                <h4 data-lang-key="benefitBestDealsTitle">מחירים ללא תחרות</h4>
+                                <p data-lang-key="benefitBestDealsDesc">חיפוש מעמיק למציאת הדילים הטובים ביותר, תוך שמירה על שקיפות מלאה.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🗺️</span>
+                            <div>
+                                <h4 data-lang-key="benefitExpertiseTitle">ידע וניסיון מקצועי</h4>
+                                <p data-lang-key="benefitExpertiseDesc">היכרות עם מגוון יעדים, ספקים וטיפים שישדרגו לכם את החופשה.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">⏰</span>
+                            <div>
+                                <h4 data-lang-key="benefitTimeSavingTitle">חיסכון בזמן ומאמץ</h4>
+                                <p data-lang-key="benefitTimeSavingDesc">אני עושה את כל העבודה המורכבת של תכנון והשוואות, אתם רק אורזים!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="content-section animate-on-scroll">
+                <div class="container">
+                    <h2 class="section-title" data-lang-key="contactTitle">מוכנים לחופשה הבאה שלכם?</h2>
+                    <p class="contact-intro" data-lang-key="contactIntro">אני זמין לכל שאלה, בקשה או התייעצות. בואו נתכנן יחד את החופשה שתמיד חלמתם עליה!</p>
+                    <div class="contact-methods">
+                        <a href="#" onclick="openWhatsAppModal(); return false;" class="contact-method-button whatsapp">
+                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.037C6.492 2.037 2 6.52 2 12.001c0 1.752.462 3.428 1.324 4.884l-1.35 4.927 5.046-1.328a9.928 9.928 0 004.98.991h.002c5.508 0 9.998-4.482 9.998-9.964S17.508 2.037 12 2.037zm0 18.246h-.002a8.236 8.236 0 01-4.193-1.186l-.299-.178-3.112.816.828-3.034-.196-.312a8.264 8.264 0 01-1.28-4.383c0-4.563 3.706-8.268 8.268-8.268s8.268 3.705 8.268 8.268-3.706 8.268-8.268 8.268zm4.545-5.927c-.246-.123-1.454-.716-1.68-.797-.226-.081-.39-.123-.555.123-.165.246-.635.797-.779.962-.144.165-.288.185-.534.062-.246-.123-.952-.374-1.926-1.186s-1.558-1.454-1.804-1.926c-.246-.472-.012-.705.11-.828.11-.11.246-.288.37-.432.123-.144.165-.246.246-.41.081-.165.04-.308-.02-.432-.062-.123-.555-1.328-.76-1.824-.205-.48-.41-.41-.555-.418h-.144c-.165 0-.432.062-.657.308-.226.246-.863.843-.863 2.05s.884 2.378 1.007 2.543c.123.165 1.743 2.662 4.23 3.74.59.26 1.05.41 1.41.534.59.185 1.13.165 1.56.103.472-.081 1.454-.59 1.66-.983.205-.39.205-.737.144-.843-.061-.103-.225-.165-.471-.288z"/></svg>
+                            <span data-lang-key="contactWhatsapp">דברו איתי בוואטסאפ</span>
+                        </a>
+                        <a href="#" onclick="openFormSubmitModal(); return false;" class="contact-method-button formsubmit-btn">
+                             <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <span data-lang-key="contactFormSubmit">השאירו פרטים ואחזור אליכם</span>
+                        </a>
+                        <a href="https://www.instagram.com/nofesh_li/" target="_blank" class="contact-method-button instagram">
+                             <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4c2.21 0 4 1.791 4 4s-1.79 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            <span data-lang-key="contactInstagram">עקבו אחריי באינסטגרם</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div id="whatsappModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 data-lang-key="modalTitleWhatsapp">פרטי בקשת הצעת מחיר (וואטסאפ)</h3>
+                    <button class="close-button" onclick="closeWhatsAppModal()" aria-label="Close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group autocomplete-container">
+                        <label for="whatsapp_country" data-lang-key="countryLabel">מדינה (אופציונלי):</label>
+                        <input type="text" id="whatsapp_country" oninput="debouncedFetchSuggestions('whatsapp_country', this.value)" autocomplete="off">
+                        <div id="whatsapp_countrySuggestions" class="suggestions-list"></div>
+                    </div>
+                    <div class="form-group autocomplete-container">
+                        <label for="whatsapp_city" data-lang-key="cityLabel">עיר (אופציונלי):</label>
+                        <input type="text" id="whatsapp_city" oninput="debouncedFetchSuggestions('whatsapp_city', this.value)" autocomplete="off">
+                        <div id="whatsapp_citySuggestions" class="suggestions-list"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp_serviceType" data-lang-key="serviceTypeLabel">סוג שירות מבוקש:</label>
+                        <select id="whatsapp_serviceType">
+                            <option value="package" data-lang-key="servicePackage">חבילת טיסה + מלון</option>
+                            <option value="flight" data-lang-key="serviceFlight">טיסה בלבד</option>
+                            <option value="hotel" data-lang-key="serviceHotel">מלון בלבד</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="sendWhatsAppMessage()" data-lang-key="sendToWhatsappBtn">שליחת בקשה בוואטסאפ</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="formSubmitModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 data-lang-key="modalTitleFormSubmit">השארת פרטים ליצירת קשר</h3>
+                    <button class="close-button" onclick="closeFormSubmitModal()" aria-label="Close">×</button>
+                </div>
+                <form id="contactFormDetails" action="https://formsubmit.co/nakachedoron37@gmail.com" method="POST">
+                    <!-- Formsubmit hidden fields -->
+                    <input type="hidden" name="_subject" value="פנייה חדשה מהאתר של דורון נקש">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="box">
+                    <input type="hidden" name="_next" value="">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="form_fullName" data-lang-key="formFullNameLabel">שם מלא (חובה):</label>
+                            <input type="text" id="form_fullName" name="שם מלא" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_phone" data-lang-key="formPhoneLabel">מספר טלפון (חובה):</label>
+                            <input type="tel" id="form_phone" name="טלפון" required>
+                        </div>
+                        <div class="form-group autocomplete-container">
+                            <label for="form_country" data-lang-key="formCountryLabel">יעד - מדינה (רשות):</label>
+                            <input type="text" id="form_country" name="מדינת יעד" oninput="debouncedFetchSuggestions('form_country', this.value)" autocomplete="off">
+                            <div id="form_countrySuggestions" class="suggestions-list"></div>
+                        </div>
+                        <div class="form-group autocomplete-container">
+                            <label for="form_city" data-lang-key="formCityLabel">יעד - עיר (רשות):</label>
+                            <input type="text" id="form_city" name="עיר יעד" oninput="debouncedFetchSuggestions('form_city', this.value)" autocomplete="off">
+                            <div id="form_citySuggestions" class="suggestions-list"></div>
+                        </div>
+                         <div class="form-group">
+                            <label for="form_dates" data-lang-key="formDatesLabel">תאריכים מבוקשים (רשות):</label>
+                            <input type="text" id="form_dates" name="תאריכים">
+                        </div>
+                        <div class="form-group">
+                             <label for="form_notes" data-lang-key="formNotesLabel">הערות נוספות (רשות):</label>
+                             <textarea id="form_notes" name="הערות" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" data-lang-key="formSubmitBtn">שליחת פרטים</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <footer class="site-footer">
+            <div class="container">
+                <p data-lang-html-key="footerText">© <span id="currentYear">2025</span> דורון נקש. סוכן הנסיעות האישי שלך לחופשות חלומיות.</p>
+            </div>
+        </footer>
+    </div> 
+    <div id="thankYouPage" class="thank-you-page">
+    </div>
+
+    <script>
+        // ==== Translations ====
+        const translations = {
+            he: {
+                logoTextMain: "דורון",
+                logoTextSub: "נקש",
+                langHe: "עברית",
+                langEn: "English",
+                langFr: "Français",
+                heroTitle: "תכנון החופשה המושלמת, בדיוק בשבילכם.",
+                heroSlogan: "עם דורון נקש, כל יעד הופך לחוויה בלתי נשכחת. מחירים מנצחים ושירות אישי עד הפרט האחרון.",
+                heroCta: "בואו נתחיל לתכנן!",
+                aboutTitle: "המומחיות שלי היא החופשה שלכם",
+                aboutDescIntro: "אני כאן כדי להפוך כל חלום על חופשה למציאות. בין אם אתם מחפשים טיסה, מלון, או חבילה מלאה, אני דואג לכל הפרטים:",
+                aboutServicePackage: "<span class=\"service-icon\">📦</span> חבילות טיסה + מלון מותאמות אישית",
+                aboutServiceFlight: "<span class=\"service-icon\">✈️</span> מציאת הטיסות המשתלמות ביותר",
+                aboutServiceHotel: "<span class=\"service-icon\">🏨</span> המלצות וקישורים להזמנת מלונות במחירים מעולים (ללא עמלת תיווך!)",
+                aboutHotelBookingInfo: "<strong>הזמנת מלון?</strong> אני מאתר עבורכם את האפשרויות הטובות ביותר ושולח קישור ישיר להזמנה – אתם חוסכים, ואני שמח לעזור!",
+                aboutPackageCommission: "<strong>חבילות וטיסות:</strong> עמלה תחרותית של 3-5% בלבד, עם שקיפות מלאה.",
+                specializationsTitle: "התמחויות מיוחדות",
+                specCityTitle: "חופשות עיר תוססות",
+                specCityDesc: "גלו את הערים המרתקות בעולם, עם מסלולים מותאמים אישית וטיפים מקומיים.",
+                specBeachTitle: "נופש חופים חלומי",
+                specBeachDesc: "מהחופים האקזוטיים ועד לאתרי הנופש היוקרתיים ביותר – החופשה המושלמת מחכה לכם.",
+                specRomanticTitle: "חבילות רומנטיות",
+                specRomanticDesc: "ירח דבש, הצעות נישואין או סתם חופשה זוגית מפנקת – אני כאן ליצור רגעים בלתי נשכחים.",
+                whyChooseUsTitle: "למה לבחור בשירות שלי?",
+                whyChooseUsIntro: "השאיפה שלי היא לספק לכם לא רק חופשה, אלא חוויה שלמה, עם שקט נפשי ושירות שמלווה אתכם בכל שלב.",
+                benefitPersonalServiceTitle: "שירות אישי ומסור",
+                benefitPersonalServiceDesc: "הקשבה מלאה לצרכים שלכם, התאמה אישית של כל פרט, וזמינות גבוהה.",
+                benefitBestDealsTitle: "מחירים ללא תחרות",
+                benefitBestDealsDesc: "חיפוש מעמיק למציאת הדילים הטובים ביותר, תוך שמירה על שקיפות מלאה.",
+                benefitExpertiseTitle: "ידע וניסיון מקצועי",
+                benefitExpertiseDesc: "היכרות עם מגוון יעדים, ספקים וטיפים שישדרגו לכם את החופשה.",
+                benefitTimeSavingTitle: "חיסכון בזמן ומאמץ",
+                benefitTimeSavingDesc: "אני עושה את כל העבודה המורכבת של תכנון והשוואות, אתם רק אורזים!",
+                contactTitle: "מוכנים לחופשה הבאה שלכם?",
+                contactIntro: "אני זמין לכל שאלה, בקשה או התייעצות. בואו נתכנן יחד את החופשה שתמיד חלמתם עליה!",
+                contactWhatsapp: "דברו איתי בוואטסאפ",
+                contactInstagram: "עקבו אחריי באינסטגרם",
+                contactFormSubmit: "השאירו פרטים",
+                modalTitleWhatsapp: "פרטי בקשת הצעת מחיר (וואטסאפ)",
+                modalTitleFormSubmit: "השארת פרטים ליצירת קשר",
+                formFullNameLabel: "שם מלא (חובה):",
+                formPhoneLabel: "מספר טלפון (חובה):",
+                formCountryLabel: "יעד - מדינה (רשות):",
+                formCityLabel: "יעד - עיר (רשות):",
+                formDatesLabel: "תאריכים מבוקשים (רשות):",
+                formNotesLabel: "הערות נוספות (רשות):",
+                formSubmitBtn: "שליחת פרטים",
+                formSubject: "פנייה חדשה מאתר האינטרנט - דורון נקש",
+                countryLabel: "מדינה (אופציונלי):",
+                cityLabel: "עיר (אופציונלי):",
+                serviceTypeLabel: "סוג שירות מבוקש:",
+                servicePackage: "חבילת טיסה + מלון",
+                serviceFlight: "טיסה בלבד",
+                serviceHotel: "מלון בלבד",
+                sendToWhatsappBtn: "שליחת בקשה בוואטסאפ",
+                footerText: "© <span id='currentYearFooterHe'>2025</span> דורון נקש. סוכן הנסיעות האישי שלך לחופשות חלומיות.",
+                whatsappGreeting: "היי דורון",
+                whatsappRequestInfo: "אשמח לקבל פרטים והצעה עבור",
+                whatsappServiceFlight: "טיסה",
+                whatsappServiceHotel: "מלון",
+                whatsappServicePackage: "חבילה של טיסה ומלון",
+                whatsappInCity: "ב",
+                whatsappInCountry: "שב",
+                selectCountryPlaceholder: "הקלד/י שם מדינה...",
+                selectCityPlaceholder: "הקלד/י שם עיר...",
+                loadingText: "טוען הצעות...",
+                noSuggestionsFound: "לא נמצאו הצעות התואמות לחיפוש.",
+                errorLoadingSuggestions: "אירעה שגיאה בטעינת ההצעות.",
+                thankYouTitle: "תודה רבה!",
+                thankYouMessage: "הפרטים שלך התקבלו בהצלחה. אחזור אליך בהקדם האפשרי.",
+                backToHome: "חזרה לדף הבית"
+            },
+            en: {
+                logoTextMain: "Doron",
+                logoTextSub: "Nakash",
+                langHe: "עברית",
+                langEn: "English",
+                langFr: "Français",
+                heroTitle: "Planning Your Perfect Vacation, Just For You.",
+                heroSlogan: "With Doron Nakash, every destination becomes an unforgettable experience. Unbeatable prices and personal service down to the last detail.",
+                heroCta: "Let's Start Planning!",
+                aboutTitle: "My Expertise is Your Vacation",
+                aboutDescIntro: "I'm here to turn every vacation dream into reality. Whether you're looking for a flight, hotel, or a full package, I take care of all the details:",
+                aboutServicePackage: "<span class=\"service-icon\">📦</span> Custom Flight + Hotel Packages",
+                aboutServiceFlight: "<span class=\"service-icon\">✈️</span> Finding the Most Affordable Flights",
+                aboutServiceHotel: "<span class=\"service-icon\">🏨</span> Recommendations and Links for Hotel Bookings at Great Prices (No Brokerage Fee!)",
+                aboutHotelBookingInfo: "<strong>Hotel Booking?</strong> I find the best options for you and send a direct booking link – you save, and I'm happy to help!",
+                aboutPackageCommission: "<strong>Packages and Flights:</strong> A competitive commission of only 3-5%, with full transparency.",
+                specializationsTitle: "Specializations",
+                specCityTitle: "Vibrant City Getaways",
+                specCityDesc: "Discover fascinating cities worldwide with custom itineraries and local tips.",
+                specBeachTitle: "Dreamy Beach Vacations",
+                specBeachDesc: "From exotic beaches to the most luxurious resorts – your perfect vacation awaits.",
+                specRomanticTitle: "Romantic Packages",
+                specRomanticDesc: "Honeymoons, marriage proposals, or just a pampering couple's getaway – I'm here to create unforgettable moments.",
+                whyChooseUsTitle: "Why Choose My Service?",
+                whyChooseUsIntro: "My goal is to provide you not just with a vacation, but a complete experience, with peace of mind and service that accompanies you every step of the way.",
+                benefitPersonalServiceTitle: "Personal & Dedicated Service",
+                benefitPersonalServiceDesc: "Full attention to your needs, personalization of every detail, and high availability.",
+                benefitBestDealsTitle: "Unbeatable Prices",
+                benefitBestDealsDesc: "In-depth search to find the best deals, while maintaining full transparency.",
+                benefitExpertiseTitle: "Professional Knowledge & Experience",
+                benefitExpertiseDesc: "Familiarity with a variety of destinations, suppliers, and tips that will upgrade your vacation.",
+                benefitTimeSavingTitle: "Save Time & Effort",
+                benefitTimeSavingDesc: "I do all the complex work of planning and comparisons, you just pack!",
+                contactTitle: "Ready for Your Next Vacation?",
+                contactIntro: "I'm available for any questions, requests, or consultations. Let's plan the vacation you've always dreamed of together!",
+                contactWhatsapp: "Chat on WhatsApp",
+                contactInstagram: "Follow on Instagram",
+                contactFormSubmit: "Leave Details",
+                modalTitleWhatsapp: "Quote Request Details (WhatsApp)",
+                modalTitleFormSubmit: "Leave Your Details",
+                formFullNameLabel: "Full Name (required):",
+                formPhoneLabel: "Phone Number (required):",
+                formCountryLabel: "Destination - Country (optional):",
+                formCityLabel: "Destination - City (optional):",
+                formDatesLabel: "Preferred Dates (optional):",
+                formNotesLabel: "Additional Notes (optional):",
+                formSubmitBtn: "Send Details",
+                formSubject: "New Inquiry from Website - Doron Nakash",
+                countryLabel: "Country (optional):",
+                cityLabel: "City (optional):",
+                serviceTypeLabel: "Requested service type:",
+                servicePackage: "Flight + Hotel Package",
+                serviceFlight: "Flight Only",
+                serviceHotel: "Hotel Only",
+                sendToWhatsappBtn: "Send Request via WhatsApp",
+                footerText: "© <span id='currentYearFooterEn'>2025</span> Doron Nakash. Your Personal Travel Agent for Dream Vacations.",
+                whatsappGreeting: "Hi Doron",
+                whatsappRequestInfo: "I'd like to get details and a quote for a",
+                whatsappServiceFlight: "flight",
+                whatsappServiceHotel: "hotel",
+                whatsappServicePackage: "flight and hotel package",
+                whatsappInCity: "in",
+                whatsappInCountry: "in",
+                selectCountryPlaceholder: "Type a country name...",
+                selectCityPlaceholder: "Type a city name...",
+                loadingText: "Loading suggestions...",
+                noSuggestionsFound: "No suggestions matching your search.",
+                errorLoadingSuggestions: "An error occurred while loading suggestions.",
+                thankYouTitle: "Thank You!",
+                thankYouMessage: "Your details have been successfully received. I will get back to you as soon as possible.",
+                backToHome: "Back to Homepage"
+            },
+            fr: {
+                logoTextMain: "Doron",
+                logoTextSub: "Nakash",
+                langHe: "עברית",
+                langEn: "English",
+                langFr: "Français",
+                heroTitle: "Planifier Vos Vacances Parfaites, Juste Pour Vous.",
+                heroSlogan: "Avec Doron Nakash, chaque destination devient une expérience inoubliable. Prix imbattables et service personnalisé jusqu'au moindre détail.",
+                heroCta: "Commençons à Planifier !",
+                aboutTitle: "Mon Expertise, Vos Vacances",
+                aboutDescIntro: "Je suis là pour transformer chaque rêve de vacances en réalité. Que vous cherchiez un vol, un hôtel ou un forfait complet, je m'occupe de tous les détails :",
+                aboutServicePackage: "<span class=\"service-icon\">📦</span> Forfaits Vol + Hôtel Personnalisés",
+                aboutServiceFlight: "<span class=\"service-icon\">✈️</span> Recherche des Vols les Plus Abordables",
+                aboutServiceHotel: "<span class=\"service-icon\">🏨</span> Recommandations et Liens pour Réservations d'Hôtels à d'Excellents Prix (Sans Frais de Courtage !)",
+                aboutHotelBookingInfo: "<strong>Réservation d'hôtel ?</strong> Je trouve les meilleures options pour vous et vous envoie un lien de réservation direct – vous économisez, et je suis heureux de vous aider !",
+                aboutPackageCommission: "<strong>Forfaits et Vols :</strong> Une commission compétitive de seulement 3-5%, en toute transparence.",
+                specializationsTitle: "Spécialisations",
+                specCityTitle: "Escapades Urbaines Vibrantes",
+                specCityDesc: "Découvrez des villes fascinantes à travers le monde, avec des itinéraires personnalisés et des conseils locaux.",
+                specBeachTitle: "Vacances de Rêve à la Plage",
+                specBeachDesc: "Des plages exotiques aux complexes hôteliers les plus luxueux – vos vacances parfaites vous attendent.",
+                specRomanticTitle: "Forfaits Romantiques",
+                specRomanticDesc: "Lunes de miel, demandes en mariage, ou simplement une escapade en couple – je suis là pour créer des moments inoubliables.",
+                whyChooseUsTitle: "Pourquoi Choisir Mon Service ?",
+                whyChooseUsIntro: "Mon objectif est de vous offrir non seulement des vacances, mais une expérience complète, avec tranquillité d'esprit et un service qui vous accompagne à chaque étape.",
+                benefitPersonalServiceTitle: "Service Personnalisé et Dédié",
+                benefitPersonalServiceDesc: "Pleine attention à vos besoins, personnalisation de chaque détail et grande disponibilité.",
+                benefitBestDealsTitle: "Prix Imbattables",
+                benefitBestDealsDesc: "Recherche approfondie pour trouver les meilleures offres, tout en maintenant une transparence totale.",
+                benefitExpertiseTitle: "Savoir-Faire et Expérience Professionnelle",
+                benefitExpertiseDesc: "Familiarité avec une variété de destinations, de fournisseurs et de conseils qui amélioreront vos vacances.",
+                benefitTimeSavingTitle: "Économisez Temps et Efforts",
+                benefitTimeSavingDesc: "Je fais tout le travail complexe de planification et de comparaison, vous n'avez qu'à faire vos valises !",
+                contactTitle: "Prêt pour Vos Prochaines Vacances ?",
+                contactIntro: "Je suis disponible pour toute question, demande ou consultation. Planifions ensemble les vacances dont vous avez toujours rêvé !",
+                contactWhatsapp: "Discuter sur WhatsApp",
+                contactInstagram: "Suivez-moi sur Instagram",
+                contactFormSubmit: "Laissez vos coordonnées",
+                modalTitleWhatsapp: "Détails de la Demande de Devis (WhatsApp)",
+                modalTitleFormSubmit: "Laissez vos coordonnées",
+                formFullNameLabel: "Nom complet (obligatoire):",
+                formPhoneLabel: "Numéro de téléphone (obligatoire):",
+                formCountryLabel: "Destination - Pays (optionnel):",
+                formCityLabel: "Destination - Ville (optionnel):",
+                formDatesLabel: "Dates souhaitées (optionnel):",
+                formNotesLabel: "Remarques supplémentaires (optionnel):",
+                formSubmitBtn: "Envoyer les informations",
+                formSubject: "Nouvelle demande du site Web - Doron Nakash",
+                countryLabel: "Pays (optionnel) :",
+                cityLabel: "Ville (optionnel) :",
+                serviceTypeLabel: "Type de service demandé :",
+                servicePackage: "Forfait Vol + Hôtel",
+                serviceFlight: "Vol Uniquement",
+                serviceHotel: "Hôtel Uniquement",
+                sendToWhatsappBtn: "Envoyer la Demande via WhatsApp",
+                footerText: "© <span id='currentYearFooterFr'>2025</span> Doron Nakash. Votre Agent de Voyage Personnel pour des Vacances de Rêve.",
+                whatsappGreeting: "Salut Doron",
+                whatsappRequestInfo: "J'aimerais obtenir des détails et un devis pour un",
+                whatsappServiceFlight: "vol",
+                whatsappServiceHotel: "hôtel",
+                whatsappServicePackage: "forfait vol et hôtel",
+                whatsappInCity: "à",
+                whatsappInCountry: "en",
+                selectCountryPlaceholder: "Tapez un nom de pays...",
+                selectCityPlaceholder: "Tapez un nom de ville...",
+                loadingText: "Chargement des suggestions...",
+                noSuggestionsFound: "Aucune suggestion ne correspond à votre recherche.",
+                errorLoadingSuggestions: "Une erreur s'est produite lors du chargement des suggestions.",
+                thankYouTitle: "Merci Beaucoup !",
+                thankYouMessage: "Vos informations ont été reçues avec succès. Je vous contacterai dès que possible.",
+                backToHome: "Retour à la page d'accueil"
+            }
+        };
+        // ==== End Translations ====
+
+        let currentLanguage = 'he';
+        let geonamesUsername = null;
+
+        const flags = {
+            he: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' width='24' height='18'%3E%3Crect width='120' height='80' fill='%23fff'/%3E%3Crect width='120' height='15' y='10' fill='%230038b8'/%3E%3Crect width='120' height='15' y='55' fill='%230038b8'/%3E%3Cpath d='M60 30 L50 47 H70 Z M60 50 L50 33 H70 Z' fill='%230038b8'/%3E%3C/svg%3E",
+            en: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' width='24' height='18'%3E%3CclipPath id='a'%3E%3Cpath d='M0 0v30h60V0z'/%3E%3C/clipPath%3E%3Cpath d='M0 0v30h60V0z' fill='%23012169'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23fff' stroke-width='6' clip-path='url(%23a)'/%3E%3Cpath d='M0 0l60 30m0-30L0 30' stroke='%23C8102E' stroke-width='4' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23fff' stroke-width='10' clip-path='url(%23a)'/%3E%3Cpath d='M30 0v30M0 15h60' stroke='%23C8102E' stroke-width='6' clip-path='url(%23a)'/%3E%3C/svg%3E",
+            fr: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600' width='24' height='18'%3E%3Crect width='300' height='600' fill='%23002654'/%3E%3Crect width='300' height='600' x='300' fill='%23fff'/%3E%3Crect width='300' height='600' x='600' fill='%23ED2939'/%3E%3C/svg%3E"
+        };
+
+        async function fetchGeoNamesUsername() {
+            console.log("Attempting to fetch GeoNames username...");
+            if (!window.db || !window.getDoc || !window.doc) {
+                console.error("Firestore not initialized. Retrying...");
+                setTimeout(fetchGeoNamesUsername, 1000);
+                return;
+            }
+            try {
+                const docRef = window.doc(window.db, "settings", "geonames");
+                const docSnap = await window.getDoc(docRef);
+                if (docSnap.exists()) {
+                    geonamesUsername = docSnap.data().username;
+                    if (geonamesUsername) console.log("GeoNames username loaded.");
+                    else console.error("GeoNames username field is missing or empty in Firestore.");
+                } else {
+                    console.error("GeoNames configuration document not found in Firestore (settings/geonames).");
+                }
+            } catch (error) {
+                console.error("Error fetching GeoNames username:", error);
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
+
+            const currentFlagImg = document.getElementById('currentFlag');
+            if (currentFlagImg && flags[lang]) {
+                currentFlagImg.src = flags[lang];
+                const langKeyForAlt = `lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`;
+                currentFlagImg.alt = translations[lang][langKeyForAlt] || lang;
+            }
+            
+            const switcher = document.getElementById('languageSwitcher');
+            if (switcher) switcher.classList.remove('open');
+
+            const langPack = translations[lang] || translations['he'];
+
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (langPack[key] !== undefined) el.textContent = langPack[key];
+            });
+            document.querySelectorAll('[data-lang-html-key]').forEach(el => {
+                const key = el.dataset.langHtmlKey;
+                if (langPack[key] !== undefined) el.innerHTML = langPack[key];
+            });
+            
+            const countryInputs = [document.getElementById('whatsapp_country'), document.getElementById('form_country')];
+            const cityInputs = [document.getElementById('whatsapp_city'), document.getElementById('form_city')];
+
+            countryInputs.forEach(input => { if (input) input.placeholder = langPack.selectCountryPlaceholder || ''; });
+            cityInputs.forEach(input => { if (input) input.placeholder = langPack.selectCityPlaceholder || ''; });
+            
+            document.querySelectorAll('select#whatsapp_serviceType option, select#form_serviceType option').forEach(option => {
+                const key = option.dataset.langKey;
+                 if (langPack[key] !== undefined) option.textContent = langPack[key];
+            });
+            document.title = langPack.pageTitle || "דורון נקש - סוכן נסיעות";
+            updateFooterYear();
+        }
+
+        const whatsappModal = document.getElementById('whatsappModal');
+        const formSubmitModal = document.getElementById('formSubmitModal');
+
+        function openWhatsAppModal() {
+            if (whatsappModal) {
+                whatsappModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        function closeWhatsAppModal() {
+            if (whatsappModal) {
+                whatsappModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            clearSuggestions('whatsapp_country');
+            clearSuggestions('whatsapp_city');
+        }
+
+        function openFormSubmitModal() {
+            if (formSubmitModal) {
+                formSubmitModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        function closeFormSubmitModal() {
+            if (formSubmitModal) {
+                formSubmitModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            clearSuggestions('form_country');
+            clearSuggestions('form_city');
+            document.getElementById('contactFormDetails')?.reset();
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                if (whatsappModal && whatsappModal.style.display === 'block') closeWhatsAppModal();
+                if (formSubmitModal && formSubmitModal.style.display === 'block') closeFormSubmitModal();
+            }
+        });
+
+        function sendWhatsAppMessage() {
+            const country = document.getElementById('whatsapp_country').value.trim();
+            const city = document.getElementById('whatsapp_city').value.trim();
+            const serviceTypeElement = document.getElementById('whatsapp_serviceType');
+            
+            const langPack = translations[currentLanguage];
+            const selectedServiceOptionText = serviceTypeElement.options[serviceTypeElement.selectedIndex].text;
+
+            let message = `${langPack.whatsappGreeting}, ${langPack.whatsappRequestInfo} ${selectedServiceOptionText}`;
+            if (city) message += ` ${langPack.whatsappInCity} ${city}`;
+            if (country) message += (city ? ` ${langPack.whatsappInCountry}` : ` ${langPack.whatsappInCity}`) + ` ${country}`;
+            message += ".";
+
+            const whatsappNumber = "0584593847";
+            const internationalNumber = whatsappNumber.startsWith('0') ? `+972${whatsappNumber.substring(1)}` : whatsappNumber;
+            
+            const whatsappUrl = `https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            closeWhatsAppModal();
+        }
+
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        async function fetchSuggestions(inputIdPrefix, query) {
+            const inputType = inputIdPrefix.includes('country') ? 'country' : 'city';
+            const suggestionsListId = `${inputIdPrefix}Suggestions`;
+
+            if (!geonamesUsername) {
+                console.warn("GeoNames username not loaded.");
+                const suggestionsList = document.getElementById(suggestionsListId);
+                if (suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px; color:orange;">${translations[currentLanguage].errorLoadingSuggestions || 'Service unavailable'}</div>`;
+                return;
+            }
+            if (query.length < 2) {
+                clearSuggestions(inputIdPrefix);
+                return;
+            }
+
+            const suggestionsList = document.getElementById(suggestionsListId);
+            if(suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px;">${translations[currentLanguage].loadingText || 'טוען...'}</div>`;
+            
+            try {
+                let url;
+                const langForAPI = currentLanguage === 'he' ? 'he' : 'en';
+
+                if (inputType === "country") {
+                    url = `https://secure.geonames.org/searchJSON?name_startsWith=${encodeURIComponent(query)}&featureClass=A&maxRows=5&lang=${langForAPI}&username=${geonamesUsername}`;
+                } else {
+                    url = `https://secure.geonames.org/searchJSON?name_startsWith=${encodeURIComponent(query)}&featureClass=P&maxRows=5&lang=${langForAPI}&username=${geonamesUsername}`;
+                }
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.error(`GeoNames API error for ${inputIdPrefix}: ${response.status}, ${response.statusText}. URL: ${url}`);
+                    throw new Error(`API error: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                clearSuggestions(inputIdPrefix);
+
+                if (data.geonames && data.geonames.length > 0) {
+                    data.geonames.forEach(place => {
+                        const div = document.createElement('div');
+                        let displayName = place.name;
+                        if (inputType === 'city' && place.countryName && place.name.toLowerCase() !== place.countryName.toLowerCase()) {
+                            displayName += `, ${place.countryName}`;
+                        }
+                        div.textContent = displayName;
+                        div.onclick = () => {
+                            document.getElementById(inputIdPrefix).value = place.name;
+                            clearSuggestions(inputIdPrefix);
+                        };
+                        if(suggestionsList) suggestionsList.appendChild(div);
+                    });
+                } else {
+                    if(suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px;">${translations[currentLanguage].noSuggestionsFound || 'לא נמצאו הצעות.'}</div>`;
+                }
+            } catch (error) {
+                console.error(`Error fetching ${inputIdPrefix} suggestions:`, error);
+                if(suggestionsList) suggestionsList.innerHTML = `<div style="padding:10px; color:red;">${translations[currentLanguage].errorLoadingSuggestions || 'שגיאה בטעינת הצעות.'}</div>`;
+            }
+        }
+        
+        const debouncedFetchSuggestions = debounce(fetchSuggestions, 350);
+
+        function clearSuggestions(inputIdPrefix) {
+            const suggestionsList = document.getElementById(`${inputIdPrefix}Suggestions`);
+            if(suggestionsList) suggestionsList.innerHTML = '';
+        }
+        
+        const langSwitcherButton = document.querySelector('.language-switcher-button');
+        const langSwitcher = document.getElementById('languageSwitcher');
+        if (langSwitcherButton && langSwitcher) {
+            langSwitcherButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                langSwitcher.classList.toggle('open');
+                const isExpanded = langSwitcher.classList.contains('open');
+                langSwitcherButton.setAttribute('aria-expanded', isExpanded.toString());
+            });
+        }
+        document.addEventListener('click', (event) => {
+            if (langSwitcher && !langSwitcher.contains(event.target) && langSwitcher.classList.contains('open')) {
+                langSwitcher.classList.remove('open');
+                if (langSwitcherButton) langSwitcherButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+        
+        function updateFooterYear() {
+            const year = new Date().getFullYear();
+            const yearSpan = document.getElementById('currentYear'); 
+            if(yearSpan) yearSpan.textContent = year;
+            const yearSpanHe = document.getElementById('currentYearFooterHe');
+            if(yearSpanHe) yearSpanHe.textContent = year;
+            const yearSpanEn = document.getElementById('currentYearFooterEn');
+            if(yearSpanEn) yearSpanEn.textContent = year;
+            const yearSpanFr = document.getElementById('currentYearFooterFr');
+            if(yearSpanFr) yearSpanFr.textContent = year;
+        }
+        
+        function showThankYouPage() {
+            const mainContent = document.getElementById('main-content');
+            const thankYouDiv = document.getElementById('thankYouPage');
+            const langPack = translations[currentLanguage];
+
+            if (mainContent) mainContent.style.display = 'none';
+            if (thankYouDiv) {
+                thankYouDiv.innerHTML = `
+                    <h1 data-lang-key="thankYouTitle">${langPack.thankYouTitle}</h1>
+                    <p data-lang-key="thankYouMessage">${langPack.thankYouMessage}</p>
+                    <a href="#" onclick="showMainContent(); return false;" class="back-home-btn" data-lang-key="backToHome">${langPack.backToHome}</a>
+                `;
+                thankYouDiv.style.display = 'flex';
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function showMainContent() {
+            const mainContent = document.getElementById('main-content');
+            const thankYouDiv = document.getElementById('thankYouPage');
+            if (mainContent) mainContent.style.display = 'block';
+            if (thankYouDiv) thankYouDiv.style.display = 'none';
+            window.location.hash = '';
+            window.scrollTo(0, 0);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM loaded. Initializing updated Formsubmit integration...");
+            fetchGeoNamesUsername();
+            changeLanguage(currentLanguage); 
+            updateFooterYear();
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const hrefAttribute = this.getAttribute('href');
+                    if (hrefAttribute && hrefAttribute.length > 1 && hrefAttribute.startsWith('#')) {
+                        const targetElement = document.querySelector(hrefAttribute);
+                        if (targetElement) {
+                            e.preventDefault();
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    } else if (hrefAttribute === '#') {
+                         e.preventDefault();
+                    }
+                });
+            });
+
+            // Set the Formsubmit _next hidden field dynamically to current page + query/hash
+            const form = document.getElementById('contactFormDetails');
+            if (form) {
+                const nextInput = form.querySelector('input[name="_next"]');
+                if (nextInput) {
+                    nextInput.value = window.location.origin + window.location.pathname + "?form_submitted=true#thank-you-message";
+                }
+            }
+
+            // Check for thank you display after redirect from Formsubmit
+            if (window.location.search.includes("form_submitted=true") && window.location.hash === "#thank-you-message") {
+                showThankYouPage();
+            }
+        });
+    </script>
+</body>
+</html>
