@@ -569,25 +569,35 @@
         }
 
     </style>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-      import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+  import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app-check.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyCHA3zQ-8qzDmTHjCJw8dKphfr0-a1r9_0",
-        authDomain: "nofesh-d7ebe.firebaseapp.com",
-        projectId: "nofesh-d7ebe",
-        storageBucket: "nofesh-d7ebe.firebasestorage.app",
-        messagingSenderId: "5256668706",
-        appId: "1:5256668706:web:533958bc06165a612c4c7b",
-        measurementId: "G-99KTGDGZNX"
-      };
+  const firebaseConfig = {
+    apiKey: "AIzaSyCHA3zQ-8qzDmTHjCJw8dKphfr0-a1r9_0",
+    authDomain: "nofesh-d7ebe.firebaseapp.com",
+    projectId: "nofesh-d7ebe",
+    storageBucket: "nofesh-d7ebe.firebasestorage.app",
+    messagingSenderId: "5256668706",
+    appId: "1:5256668706:web:533958bc06165a612c4c7b",
+    measurementId: "G-99KTGDGZNX"
+  };
 
-      const app = initializeApp(firebaseConfig);
-      window.db = getFirestore(app);
-      window.getDoc = getDoc;
-      window.doc = doc;
-    </script>
+  // initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // initialize App Check עם ה-site key שלך
+  const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider("6LdU21UrAAAAAGuUDF2lN2TEtuYDyA7K5qe6pMGm"),
+    isTokenAutoRefreshEnabled: true
+  });
+
+  // המשך שימוש ב־Firestore:
+  window.db = getFirestore(app);
+  window.getDoc = getDoc;
+  window.doc = doc;
+</script>
 </head>
 <body>
     <div id="main-content"> <header class="site-header">
